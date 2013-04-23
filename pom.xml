@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.modeshape.quickstarts</groupId>
+    <artifactId>modeshape-quickstarts-aggregator</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>ModeShape EAP Quickstarts</name>
+    <description>Top-Level POM for building all of the quickstarts.</description>
+    <url>http://www.modeshape.org</url>
+    <packaging>pom</packaging>
+    <scm>
+        <connection>scm:git:git://github.com/ModeShape/quickstart.git</connection>
+        <developerConnection>scm:git:git@github.com:ModeShape/quickstart.git</developerConnection>
+        <url>http://github.com/ModeShape/quickstart</url>
+    </scm>
+    <modules>
+        <module>modeshape-servlet-example</module>
+    </modules>
+</project>
