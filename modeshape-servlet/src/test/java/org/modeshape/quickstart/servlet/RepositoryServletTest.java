@@ -13,6 +13,10 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.javanet.NetHttpTransport;
 
+/**
+ * Arquillian test for {@link RepositoryServlet}. For this to pass, make sure that the active server has a repository
+ * named "sample".
+ */
 @RunWith(Arquillian.class)
 @RunAsClient
 public class RepositoryServletTest {

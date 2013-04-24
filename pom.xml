@@ -16,5 +16,6 @@
     </scm>
     <modules>
         <module>modeshape-servlet</module>
+        <module>modeshape-ejb</module>
     </modules>
 </project>
