@@ -19,7 +19,7 @@ public class RepositoryServletTest {
 
     @Deployment
     public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "modeshape-servlet-example-test.war").addClass(RepositoryServlet.class)
+        return ShrinkWrap.create(WebArchive.class, "modeshape-servlet-test.war").addClass(RepositoryServlet.class)
                 .addAsWebInfResource(new File("src/main/resources/log4j.properties"))
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"))
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-deployment-structure.xml"))

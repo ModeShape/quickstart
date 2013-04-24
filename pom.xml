@@ -15,6 +15,6 @@
         <url>http://github.com/ModeShape/quickstart</url>
     </scm>
     <modules>
-        <module>modeshape-servlet-example</module>
+        <module>modeshape-servlet</module>
     </modules>
 </project>

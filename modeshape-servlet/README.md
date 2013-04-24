@@ -40,7 +40,7 @@ for help on how to install and configure Maven 3._
 
         mvn clean package jboss-as:deploy
 
-4. This will deploy `target/modeshape-servlet-example.war` to the running instance of the server.
+4. This will deploy `target/modeshape-servlet.war` to the running instance of the server.
 
 Accessing the application
 ---------------------
