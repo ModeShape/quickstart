@@ -31,6 +31,7 @@
         <!-- Global dependency version information-->
         <version.org.jboss.bom>1.0.4.Final</version.org.jboss.bom>
         <version.modeshape>3.2.0.Final</version.modeshape>
+        <version.google.http-client>1.14.1-beta</version.google.http-client>
     </properties>
 
     <dependencyManagement>
@@ -100,11 +101,17 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--The following is a list of test dependencies which are built using Arquillian-->
+        <!--The following is a list of test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client</artifactId>
+            <version>${version.google.http-client}</version>
         </dependency>
 
         <dependency>

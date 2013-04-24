@@ -1,5 +1,5 @@
-<%@ page import="javax.jcr.*" %>
-<%@ page import="org.modeshape.example.web.RepositoryServlet" %>
+<%@ page import="javax.jcr.Node" %>
+<%@ page import="javax.jcr.NodeIterator" %>
 <html>
 <head>
     <title>ModeShape Servlet QuickStart</title>
@@ -58,9 +58,9 @@
                                 </p>
                             </td>
                             <td style="vertical-align:bottom">
-                                <input type="text" name="<%=RepositoryServlet.REPOSITORY_PARAM%>"
-                                       value="<%= session.getAttribute(RepositoryServlet.REPOSITORY_PARAM) == null ? "" :
-                                       session.getAttribute(RepositoryServlet.REPOSITORY_PARAM) %>"
+                                <input type="text" name="<%=org.modeshape.quickstart.servlet.RepositoryServlet.REPOSITORY_PARAM%>"
+                                       value="<%= session.getAttribute(org.modeshape.quickstart.servlet.RepositoryServlet.REPOSITORY_PARAM) == null ? "" :
+                                       session.getAttribute(org.modeshape.quickstart.servlet.RepositoryServlet.REPOSITORY_PARAM) %>"
                                        size="50"/>
                             </td>
                         </tr>
@@ -72,8 +72,8 @@
                             </td>
                             <td style="vertical-align:bottom">
                                 <input type="text" name="path"
-                                       value="<%= session.getAttribute(RepositoryServlet.NODE_PATH_PARAM) == null ?  "" :
-                                       session.getAttribute(RepositoryServlet.NODE_PATH_PARAM) %>"
+                                       value="<%= session.getAttribute(org.modeshape.quickstart.servlet.RepositoryServlet.NODE_PATH_PARAM) == null ?  "" :
+                                       session.getAttribute(org.modeshape.quickstart.servlet.RepositoryServlet.NODE_PATH_PARAM) %>"
                                        size="50"/></td>
                         </tr>
                         <tr>
@@ -84,18 +84,18 @@
                     </table>
                 </form>
             </div>
-            <% if (session.getAttribute(RepositoryServlet.ERROR_MESSAGE) != null) { %>
+            <% if (session.getAttribute(org.modeshape.quickstart.servlet.RepositoryServlet.ERROR_MESSAGE) != null) { %>
             <div style="border:1px solid red; color:red; margin-top:30px; padding:5%">
-                <%= session.getAttribute(RepositoryServlet.ERROR_MESSAGE) %>
+                <%= session.getAttribute(org.modeshape.quickstart.servlet.RepositoryServlet.ERROR_MESSAGE) %>
             </div>
-            <%} else if (session.getAttribute(RepositoryServlet.CHILDREN_ATTRIBUTE) != null) {%>
+            <%} else if (session.getAttribute(org.modeshape.quickstart.servlet.RepositoryServlet.CHILDREN_ATTRIBUTE) != null) {%>
             <p style="font: 14pt sans-serif">
-                <b>Selected node: <%= session.getAttribute(RepositoryServlet.NODE_PATH_PARAM) %></b>
+                <b>Selected node: <%= session.getAttribute(org.modeshape.quickstart.servlet.RepositoryServlet.NODE_PATH_PARAM) %></b>
             </p>
             <p style="font: 14pt sans-serif"><b>Children:</b></p>
             <ul style="font: 10pt sans-serif">
                 <%
-                    NodeIterator it = (NodeIterator)session.getAttribute(RepositoryServlet.CHILDREN_ATTRIBUTE);
+                    NodeIterator it = (NodeIterator)session.getAttribute(org.modeshape.quickstart.servlet.RepositoryServlet.CHILDREN_ATTRIBUTE);
                     while (it.hasNext()) {
                         Node n = it.nextNode(); %>
                 <li>

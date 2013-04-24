@@ -45,7 +45,7 @@ for help on how to install and configure Maven 3._
 Accessing the application
 ---------------------
 
-The application will be running at the following URL: <http://localhost:8080/modeshape/>.
+The application will be running at the following URL: <http://localhost:8080/modeshape-servlet/>.
 
 Installing the ModeShape kit will add two pre-configured demo repositories: `sample` and `artifacts` (see the `JBOSS_HOME/conf/standalone-modeshape.xml` file for more details).
 Both repositories are bound by default in JNDI under names: `java:/jcr/sample` and `java:/jcr/artifacts`.

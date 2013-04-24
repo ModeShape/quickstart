@@ -4,7 +4,7 @@
     <description>Repository descriptor</description>
     <servlet>
         <servlet-name>JCR-RepositoryServlet</servlet-name>
-        <servlet-class>org.modeshape.example.web.RepositoryServlet</servlet-class>
+        <servlet-class>org.modeshape.quickstart.servlet.RepositoryServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>

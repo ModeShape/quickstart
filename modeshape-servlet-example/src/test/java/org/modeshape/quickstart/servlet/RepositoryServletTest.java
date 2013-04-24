@@ -1,18 +1,19 @@
-package org.modeshape.example.web;
+package org.modeshape.quickstart.servlet;
 
 import java.io.File;
-import java.net.URL;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.*;
 import org.junit.runner.RunWith;
-import sun.net.www.protocol.http.HttpURLConnection;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.javanet.NetHttpTransport;
 
-@RunWith( Arquillian.class )
+@RunWith(Arquillian.class)
 @RunAsClient
 public class RepositoryServletTest {
 
@@ -31,18 +32,11 @@ public class RepositoryServletTest {
 
     @Test
     public void shouldExecuteQuery() throws Exception {
-        URL url = new URL("http://localhost:8080/modeshape/session.do?repository=sample&path=/");
-        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible )");
-        connection.setRequestProperty("Accept", "*/*");
-        connection.setDoOutput(true);
-        connection.setDoInput(true);
-
-        connection.connect();
-
-        int responseCode = connection.getResponseCode();
-        Assert.assertEquals(200, responseCode);
+        HttpRequestFactory requestFactory = new NetHttpTransport().createRequestFactory();
+        Assert.assertEquals(200,
+                            requestFactory.buildGetRequest(new GenericUrl(
+                                    "http://localhost:8080/modeshape-servlet/session.do?repository=sample&path=/"))
+                                    .execute().getStatusCode());
     }
 }
 
