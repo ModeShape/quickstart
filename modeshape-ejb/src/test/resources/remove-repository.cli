@@ -1,0 +1,11 @@
+batch
+# !! Make sure the modeshape subsystem is installed into the active configuration before running this
+
+# Remove the test repository
+/subsystem=modeshape/repository=test-ejb:remove
+
+# Remove the cache container
+/subsystem=infinispan/cache-container=modeshape-test:remove
+
+# Execute
+run-batch

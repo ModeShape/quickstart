@@ -169,7 +169,7 @@ public class EJBController implements Serializable {
         }
     }
 
-    private enum RepoProvider {
+    protected enum RepoProvider {
         SINGLETON("Stateful Singleton EJB"),
         STATELESS_CMT("Stateless CMT EJB"),
         STATELESS_BMT("Stateless BMT EJB");

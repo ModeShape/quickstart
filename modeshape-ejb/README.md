@@ -1,12 +1,12 @@
-Example Using ModeShape from a Web Application's Servlet
+Example Using ModeShape from different types of EJBs
 =========================================================
 
 
 What is it?
 -----------
 
-This is a self-contained and deployable Maven 3 project that shows how to get access repository bound in JNDI either via native JCR API or using
-JNDI API.
+This is a self-contained and deployable Maven 3 project that shows how to get access and use a repository bound in JNDI, from different
+types of EJBs via a JSF application.
 
 System requirements
 -------------------
@@ -40,26 +40,23 @@ for help on how to install and configure Maven 3._
 
         mvn clean package jboss-as:deploy
 
-4. This will deploy `target/modeshape-servlet.war` to the running instance of the server.
+4. This will deploy `target/modeshape-ejb.war` to the running instance of the server.
 
 Accessing the application
 ---------------------
 
-The application will be running at the following URL: <http://localhost:8080/modeshape-servlet/>.
+The application will be running at the following URL: <http://localhost:8080/modeshape-ejb/>.
 
 Installing the ModeShape kit will add two pre-configured demo repositories: `sample` and `artifacts` (see the `JBOSS_HOME/conf/standalone-modeshape.xml` file for more details).
 Both repositories are bound by default in JNDI under names: `java:/jcr/sample` and `java:/jcr/artifacts`.
 
-The user is presented with a form where he can input data in two fields:
+The user is presented with a form where he can input the name of a repository and select on of the following EJBs: a Stateful Singleton,
+a Stateless EJB which uses Container Managed Transactions and a Stateful EJB which uses Bean Managed Transactions.
 
-1. Repository Location - a *mandatory* string, which can have one of the following formats that will dictate the way the repository
-is looked up:
-    `repository_name` - the simple name of a repository which can be located in JNDI at the pre-configured location: java:/jcr/<repository_name>
-    `full_repository_jndi_path` - the full JNDI path to a repository
-    `repository_url` - a url starting with either `jndi:`, `http:`, `file:` and `classpath:` which represents the full path to a repository JSON configuration file
-2. Node Path - an *optional* string which represents the full path to a node in a repository. The default value is the root path: _/_
+Based on the user selection, one of the following two actions is delegated to the EJB:
 
-Once the above information is submitted, the form will display the children of the node located at the above path.
+1. Describe - displays some meta-information about the repository or shows an error in case the repository cannot be located in JNDI.
+2. Count - displays the total number of non-system nodes in a repository or shows an error in case the repository cannot be located in JNDI.
 
 Undeploy the Archive
 --------------------
@@ -79,7 +76,9 @@ This quickstart provides Arquillian tests. By default, these tests are configure
 2. Open a command line and navigate to the root directory of this quickstart.
 3. Type the following command to run the test goal with the following profile activated:
 
-        mvn clean test -Parq-jbossas-remote
+        mvn clean package -Parq-jbossas-remote
+
+The above command will create & initialize a test repository, run the existing tests and then remove & clean up the test data.
 
 The ModeShape project
 ---------------------

@@ -26,7 +26,7 @@
         <version.resources.plugin>2.6</version.resources.plugin>
         <version.surefire.plugin>2.12.3</version.surefire.plugin>
         <version.war.plugin>2.3</version.war.plugin>
-        <version.org.jboss.as.plugins.maven.plugin>7.3.Final</version.org.jboss.as.plugins.maven.plugin>
+        <version.org.jboss.as.plugins.maven.plugin>7.4.Final</version.org.jboss.as.plugins.maven.plugin>
 
         <!-- Global dependency version information-->
         <version.org.jboss.bom>1.0.4.Final</version.org.jboss.bom>
@@ -78,10 +78,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-        </dependency>
 
         <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
         <dependency>
@@ -95,13 +91,6 @@
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
             <artifactId>jboss-annotations-api_1.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Import the Servlet API, we use provided scope as the API is included in JBoss AS 7 -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.servlet</groupId>
-            <artifactId>jboss-servlet-api_3.0_spec</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -132,14 +121,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.google.http-client</groupId>
-            <artifactId>google-http-client</artifactId>
-            <version>${version.google.http-client}</version>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
@@ -159,7 +140,7 @@
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}.war</finalName>
+        <finalName>${project.artifactId}</finalName>
 
         <pluginManagement>
             <plugins>
@@ -234,6 +215,7 @@
         <profile>
             <!-- The default profile skips all tests, though you can tune
                 it to run just unit tests based on a custom pattern -->
+
             <!-- Separate profiles are provided for running all tests, including
                 Arquillian tests that execute in the specified container -->
             <id>default</id>
@@ -242,6 +224,24 @@
             </activation>
             <build>
                 <plugins>
+                    <!-- Undeploy the application on clean -->
+                    <plugin>
+                        <groupId>org.jboss.as.plugins</groupId>
+                        <artifactId>jboss-as-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>undeploy</id>
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>undeploy</goal>
+                                </goals>
+                                <configuration>
+                                    <ignoreMissingDeployment>true</ignoreMissingDeployment>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>${version.surefire.plugin}</version>
@@ -253,24 +253,10 @@
             </build>
         </profile>
         <profile>
-            <!-- An optional Arquillian testing profile that
-                executes tests in your JBoss AS instance -->
-            <!-- This profile will start a new JBoss AS instance,
-                and execute the test, shutting it down when done -->
-            <!-- Run with: mvn clean test -Parq-jbossas-managed -->
-            <id>arq-jbossas-managed</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.as</groupId>
-                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <!-- An optional Arquillian testing profile that
-                executes tests in a remote JBoss AS instance -->
-            <!-- Run with: mvn clean test -Parq-jbossas-remote -->
+            <!--
+                An optional Arquillian testing profile that executes tests in a remote JBoss AS instance
+                Run with: mvn clean test -Parq-jbossas-remote
+             -->
             <id>arq-jbossas-remote</id>
             <dependencies>
                 <dependency>
@@ -279,6 +265,53 @@
                     <scope>test</scope>
                 </dependency>
             </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jboss.as.plugins</groupId>
+                        <artifactId>jboss-as-maven-plugin</artifactId>
+                        <executions>
+                            <!--
+                                Step1. Run the CLI script that creates the test setup
+                                Step2. Reload the server via the plugin (not the script) so that it's finished by the time Maven moves
+                                to the next phase
+                            -->
+                            <execution>
+                                <id>create-test-repository</id>
+                                <goals>
+                                    <goal>execute-commands</goal>
+                                    <goal>shutdown</goal>
+                                </goals>
+                                <phase>process-test-classes</phase>
+                                <configuration>
+                                    <reload>true</reload>
+                                    <execute-commands>
+                                        <scripts>
+                                            <script>src/test/resources/create-repository.cli</script>
+                                        </scripts>
+                                    </execute-commands>
+                                </configuration>
+                            </execution>
+
+                            <!--Removes the test repository-->
+                            <execution>
+                                <id>remove-test-repository</id>
+                                <goals>
+                                    <goal>execute-commands</goal>
+                                </goals>
+                                <phase>prepare-package</phase>
+                                <configuration>
+                                    <execute-commands>
+                                        <scripts>
+                                            <script>src/test/resources/remove-repository.cli</script>
+                                        </scripts>
+                                    </execute-commands>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
