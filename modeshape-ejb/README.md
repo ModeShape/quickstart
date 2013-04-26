@@ -23,7 +23,7 @@ Start JBoss EAP with the ModeShape configuration
 --------------------------------------------------------------------------------
 
 1. Open a command line and navigate to the root of the JBoss server directory.
-2. The following shows the command line to start the server with the web profile:
+2. The following shows the command line to start the server with the ModeShape profile:
 
         For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape.xml
         For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape.xml

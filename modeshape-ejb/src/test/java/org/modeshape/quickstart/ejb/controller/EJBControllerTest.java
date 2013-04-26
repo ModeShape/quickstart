@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(Arquillian.class)
 public class EJBControllerTest {
-    private static final String TEST_REPOSITORY = "test-ejb";
+    private static final String TEST_REPOSITORY = "sample";
 
     @Inject
     private EJBController ejbController;

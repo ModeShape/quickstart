@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Arquillian.class)
 public class RepositoryDescriptorEJBTest {
 
-    private static final String TEST_REPOSITORY = "test-ejb";
+    private static final String TEST_REPOSITORY = "sample";
 
     @EJB
     private SingletonRepositoryDescriptor singletonRepositoryDescriptor;
