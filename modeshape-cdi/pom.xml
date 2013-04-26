@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.modeshape.quickstarts</groupId>
-    <artifactId>modeshape-ejb</artifactId>
+    <artifactId>modeshape-cdi</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Example of web application that uses ModeShape via EJBs</name>
+    <name>Example of a JSF web application that uses ModeShape via CDI</name>
     <description>
-        A simple self-contained example web application that uses different EJBs to retrieve repositories managed within EAP.
+        A simple self-contained JSF web application that injects a ModeShape repository via CDI and performs various operations.
     </description>
 
     <properties>
@@ -31,7 +31,6 @@
         <!-- Global dependency version information-->
         <version.org.jboss.bom>1.0.4.Final</version.org.jboss.bom>
         <version.modeshape>3.2.0.Final</version.modeshape>
-        <version.google.http-client>1.14.1-beta</version.google.http-client>
     </properties>
 
     <dependencyManagement>
@@ -70,10 +69,12 @@
             <groupId>javax.jcr</groupId>
             <artifactId>jcr</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.modeshape</groupId>
             <artifactId>modeshape-jcr-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -98,20 +99,6 @@
         <dependency>
             <groupId>org.jboss.spec.javax.faces</groupId>
             <artifactId>jboss-jsf-api_2.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Import the EJB API, we use provided scope as the API is included in JBoss AS 7 -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.ejb</groupId>
-            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Import the JPA API, we use provided scope as the API is included in JBoss AS 7 -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -235,53 +222,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!--
-            <plugin>
-               <groupId>org.jboss.as.plugins</groupId>
-               <artifactId>jboss-as-maven-plugin</artifactId>
-               <executions>
-                    Undeploy the application on clean & Remove the test repository and ISPN caches
-                   <execution>
-                       <id>undeploy</id>
-                       <phase>clean</phase>
-                       <goals>
-                           <goal>undeploy</goal>
-                           <goal>execute-commands</goal>
-                           <goal>shutdown</goal>
-                       </goals>
-                       <configuration>
-                           <ignoreMissingDeployment>true</ignoreMissingDeployment>
-                           <reload>true</reload>
-                           <execute-commands>
-                               <batch>false</batch>
-                               <scripts>
-                                   <script>src/main/resources/remove-repository.cli</script>
-                               </scripts>
-                           </execute-commands>
-                       </configuration>
-                   </execution>
-
-                       Create the test repository and ISPN caches, and reload the repository
-                   <execution>
-                       <id>create-test-repository</id>
-                       <goals>
-                           <goal>execute-commands</goal>
-                           <goal>shutdown</goal>
-                       </goals>
-                       <phase>validate</phase>
-                       <configuration>
-                           <reload>true</reload>
-                           <execute-commands>
-                               <scripts>
-                                   <script>src/main/resources/create-repository.cli</script>
-                               </scripts>
-                           </execute-commands>
-                       </configuration>
-                   </execution>
-               </executions>
-           </plugin>
-           -->
         </plugins>
     </build>
 

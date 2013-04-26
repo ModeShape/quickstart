@@ -1,12 +1,12 @@
-Example Using ModeShape from different types of EJBs
+Example Using ModeShape from a JSF application via CDI
 =========================================================
 
 
 What is it?
 -----------
 
-This is a self-contained and deployable Maven 3 project that shows how to get access and use a repository bound in JNDI, from different
-types of EJBs via a JSF application.
+This is a self-contained and deployable Maven 3 project that shows how to get access and use a repository bound in JNDI, from
+a JSF application, using only CDI.
 
 System requirements
 -------------------
@@ -40,23 +40,24 @@ for help on how to install and configure Maven 3._
 
         mvn clean package jboss-as:deploy
 
-4. This will deploy `target/modeshape-ejb.war` to the running instance of the server.
+4. This will deploy `target/modeshape-cdi.war` to the running instance of the server.
 
 Accessing the application
 ---------------------
 
-The application will be running at the following URL: <http://localhost:8080/modeshape-ejb/>.
+The application will be running at the following URL: <http://localhost:8080/modeshape-cdi/>.
 
-Installing the ModeShape kit will add two pre-configured demo repositories: `sample` and `artifacts` (see the `JBOSS_HOME/conf/standalone-modeshape.xml` file for more details).
-Both repositories are bound by default in JNDI under names: `java:/jcr/sample` and `java:/jcr/artifacts`.
+Installing the ModeShape kit will add a preconfigured repository named `sample` which will be used by this example (see the `JBOSS_HOME/conf/standalone-modeshape.xml` file for more details).
 
-The user is presented with a form where he can input the name of a repository and select on of the following EJBs: a Stateful Singleton,
-a Stateless EJB which uses Container Managed Transactions and a Stateful EJB which uses Bean Managed Transactions.
+The user is presented with a form where he can input one of the following:
 
-Based on the user selection, one of the following two actions is delegated to the EJB:
+1. Parent Absolute Path - an absolute node path
+2. New Node Name - a simple string which represents the name of new node that can be added
 
-1. Describe - displays some meta-information about the repository or shows an error in case the repository cannot be located in JNDI.
-2. Count - displays the total number of non-system nodes in a repository or shows an error in case the repository cannot be located in JNDI.
+based on which one of the following actions can be performed
+
+1. Show children - displays the children of node located at "Parent Absolute Path"
+2. Add Node - add a new child with the given name under the node located at "Parent Absolute Path"
 
 Undeploy the Archive
 --------------------

@@ -36,8 +36,7 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 /**
  * Demo for using JCR from web application. This example application accepts a "repository" parameter and a "path" parameter,
@@ -55,7 +54,7 @@ public class RepositoryServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryServlet.class);
+    private static final Logger LOGGER = Logger.getLogger(RepositoryServlet.class);
 
     protected void doGet( HttpServletRequest request,
                           HttpServletResponse response ) throws IOException {
@@ -70,7 +69,7 @@ public class RepositoryServlet extends HttpServlet {
 
                 // establish jcr session ...
                 jcrSession = repository.login();
-                LOGGER.info("Session established successfully to repository at: {0}", repositoryLocation);
+                LOGGER.info("Session established successfully to repository at: " + repositoryLocation);
 
                 // get the path of the node
                 String path = storeRequestParameterIntoSession(request, NODE_PATH_PARAM, "/");
@@ -135,7 +134,7 @@ public class RepositoryServlet extends HttpServlet {
     private Repository searchJNDI( String location ) {
         Repository repository = null;
         try {
-            LOGGER.debug("Searching in JNDI directly at: {0}", location);
+            LOGGER.debug("Searching in JNDI directly at: " + location);
             InitialContext ic = new InitialContext();
             repository = (Repository)ic.lookup(location);
         } catch (NamingException e) {
@@ -145,7 +144,7 @@ public class RepositoryServlet extends HttpServlet {
         if (repository == null) {
             location = "java:/jcr/" + location;
             try {
-                LOGGER.debug("Searching in JNDI directly at: {0}", location);
+                LOGGER.debug("Searching in JNDI directly at: " + location);
                 InitialContext ic = new InitialContext();
                 repository = (Repository)ic.lookup(location);
             } catch (NamingException e) {

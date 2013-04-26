@@ -30,16 +30,15 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import org.apache.log4j.Logger;
 import org.modeshape.jcr.api.JcrTools;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A utility class that describes a repository after looking it up in JNDI.
  */
 public abstract class RepositoryDescriptor {
 
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    protected Logger log = Logger.getLogger(getClass());
     protected JcrTools jcrTools = new JcrTools();
 
     /**

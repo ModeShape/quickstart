@@ -81,6 +81,8 @@ This quickstart provides Arquillian tests. By default, these tests are configure
 
         mvn clean test -Parq-jbossas-remote
 
+The above command will run the tests using the predefined repository named `sample` (see above).
+
 The ModeShape project
 ---------------------
 ModeShape is an open source implementation of the JCR 2.0 
