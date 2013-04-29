@@ -24,9 +24,9 @@ public class RepositoryServletTest {
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "modeshape-servlet-test.war").addClass(RepositoryServlet.class)
-                .addAsWebInfResource(new File("src/main/resources/log4j.properties"))
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"))
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-deployment-structure.xml"))
+                .addAsWebInfResource(new File("src/test/resources/log4j.properties"))
                 .addAsWebResource(new File("src/main/webapp/dblue106.gif"))
                 .addAsWebResource(new File("src/main/webapp/lgrey029.jpg"))
                 .addAsWebResource(new File("src/main/webapp/main.jsp"))

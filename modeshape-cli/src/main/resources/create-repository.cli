@@ -12,12 +12,14 @@ end-if
 if (outcome != success) of /subsystem=infinispan/cache-container=modeshape-test:read-resource
     # Setup Infinispan
     /subsystem=infinispan/cache-container=modeshape-test:add
-    /subsystem=infinispan/cache-container=modeshape-test/local-cache=test-ejb:add
-    /subsystem=infinispan/cache-container=modeshape-test/local-cache=test-ejb/transaction=TRANSACTION:add(mode=NON_XA)
-    /subsystem=infinispan/cache-container=modeshape-test/local-cache=test-ejb/file-store=FILE_STORE:add(path="modeshape/store/test-ejb",relative-to="jboss.server.data.dir",passivation=false,purge=false)
+    /subsystem=infinispan/cache-container=modeshape-test/local-cache=test-cli:add
+    /subsystem=infinispan/cache-container=modeshape-test/local-cache=test-cli/transaction=TRANSACTION:add(mode=NON_XA)
+    /subsystem=infinispan/cache-container=modeshape-test/local-cache=test-cli/file-store=FILE_STORE:add(path="modeshape/store/test-cli",relative-to="jboss.server.data.dir",passivation=false,purge=false)
 end-if
 
 # Add the test repository
-if (outcome != success) of /subsystem=modeshape/repository=test-ejb:read-resource
-    /subsystem=modeshape/repository=test-ejb:add(cache-container="modeshape-test")
+if (outcome != success) of /subsystem=modeshape/repository=test-cli:read-resource
+    /subsystem=modeshape/repository=test-cli:add(cache-container="modeshape-test")
 end-if
+
+:reload

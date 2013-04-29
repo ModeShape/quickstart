@@ -1,6 +1,6 @@
 # Remove the test repository if it exists
-if (outcome == success) of /subsystem=modeshape/repository=test-ejb:read-resource
-    /subsystem=modeshape/repository=test-ejb:remove
+if (outcome == success) of /subsystem=modeshape/repository=test-cli:read-resource
+    /subsystem=modeshape/repository=test-cli:remove
 end-if
 
 # Remove the Infinispan cache container
@@ -8,3 +8,5 @@ if (outcome == success) of /subsystem=infinispan/cache-container=modeshape-test:
     # Setup Infinispan
     /subsystem=infinispan/cache-container=modeshape-test:remove
 end-if
+
+:reload
