@@ -68,10 +68,6 @@ Undeploy the Archive
 
         mvn jboss-as:undeploy
 
-4. The archive is also undeployed each time the following command is issued:
-
-        mvn clean
-
 Run the Arquillian Tests
 -------------------------
 

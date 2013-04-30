@@ -215,24 +215,6 @@
             <build>
                 <plugins>
                     <plugin>
-                        <!-- Undeploy the application on clean -->
-                        <groupId>org.jboss.as.plugins</groupId>
-                        <artifactId>jboss-as-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>undeploy</id>
-                                <phase>clean</phase>
-                                <goals>
-                                    <goal>undeploy</goal>
-                                </goals>
-                                <configuration>
-                                    <ignoreMissingDeployment>true</ignoreMissingDeployment>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>${version.surefire.plugin}</version>
                         <configuration>

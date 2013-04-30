@@ -196,33 +196,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
-        <plugins>
-            <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
-                <executions>
-                    <!--Undeploy the application on clean & Remove the test repository and ISPN caches-->
-                    <execution>
-                        <id>undeploy</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>undeploy</goal>
-                        </goals>
-                        <configuration>
-                            <ignoreMissingDeployment>true</ignoreMissingDeployment>
-                            <reload>true</reload>
-                            <execute-commands>
-                                <batch>false</batch>
-                                <scripts>
-                                    <script>src/main/resources/remove-repository.cli</script>
-                                </scripts>
-                            </execute-commands>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 
     <profiles>

@@ -66,10 +66,6 @@ Undeploy the Archive
 
         mvn jboss-as:undeploy
 
-4. The archive is also undeployed each time the following command is issued:
-
-        mvn clean
-
 Remove the demo repository
 ---------------------------
 If you want to cleanup the repository and other ModeShape related data, you can run the following script:
