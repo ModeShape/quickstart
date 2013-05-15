@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.modeshape.quickstarts</groupId>
+    <artifactId>modeshape-clustering</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Example of a JSF web application that uses ModeShape via CDI</name>
+    <description>
+        A simple self-contained JSF web application that injects a ModeShape repository via CDI and performs various operations.
+    </description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+
+        <!-- Maven plugin versions -->
+        <version.assembly.plugin>2.4</version.assembly.plugin>
+        <version.clean.plugin>2.5</version.clean.plugin>
+        <version.compiler.plugin>3.0</version.compiler.plugin>
+        <version.dependency.plugin>2.6</version.dependency.plugin>
+        <version.install.plugin>2.4</version.install.plugin>
+        <version.jar.plugin>2.4</version.jar.plugin>
+        <version.resources.plugin>2.6</version.resources.plugin>
+        <version.surefire.plugin>2.12.3</version.surefire.plugin>
+        <version.war.plugin>2.3</version.war.plugin>
+        <version.org.jboss.as.plugins.maven.plugin>7.4.Final</version.org.jboss.as.plugins.maven.plugin>
+
+        <!-- Global dependency version information-->
+        <version.org.jboss.bom>1.0.4.Final</version.org.jboss.bom>
+        <version.modeshape>3.2.0.Final</version.modeshape>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- JBoss distributes a complete set of Java EE 6 APIs including
+                a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
+                a collection) of artifacts. We use this here so that we always get the correct
+                versions of artifacts. Here we use the jboss-javaee-6.0 stack (you can
+                read this as the JBoss stack of the Java EE 6 APIs). You can actually
+                use this stack with any version of JBoss AS that implements Java EE 6, not
+                just JBoss AS 7! -->
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>jboss-javaee-6.0-with-tools</artifactId>
+                <version>${version.org.jboss.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Import the ModeShape BOM for embedded usage. This adds to the "dependenciesManagement" section
+                 defaults for all of the modules we might need, but we still have to include in the
+                 "dependencies" section the modules we DO need. The benefit is that we don't have to
+                 specify the versions of any of those modules.-->
+            <dependency>
+                <groupId>org.modeshape.bom</groupId>
+                <artifactId>modeshape-bom-jbosseap</artifactId>
+                <version>${version.modeshape}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.jcr</groupId>
+            <artifactId>jcr</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-jcr-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+
+        <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Import the Common Annotations API (JSR-250), we use provided scope
+            as the API is included in JBoss AS 7 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Import the JSF API, we use provided scope as the API is included in JBoss AS 7 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.faces</groupId>
+            <artifactId>jboss-jsf-api_2.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--The following is a list of test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.protocol</groupId>
+            <artifactId>arquillian-protocol-servlet</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-depchain</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${version.assembly.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${version.clean.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${version.compiler.plugin}</version>
+                    <configuration>
+                        <showDeprecation>false</showDeprecation>
+                        <showWarnings>false</showWarnings>
+                        <compilerArguments>
+                            <source>${maven.compiler.source}</source>
+                            <target>${maven.compiler.target}</target>
+                        </compilerArguments>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${version.dependency.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${version.install.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${version.jar.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${version.resources.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version.surefire.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${version.war.plugin}</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+
+                <!-- JBoss AS plugin to deploy war -->
+                <plugin>
+                    <groupId>org.jboss.as.plugins</groupId>
+                    <artifactId>jboss-as-maven-plugin</artifactId>
+                    <version>${version.org.jboss.as.plugins.maven.plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <!-- The default profile skips all tests, though you can tune
+                it to run just unit tests based on a custom pattern -->
+
+            <!-- Separate profiles are provided for running all tests, including
+                Arquillian tests that execute in the specified container -->
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!--
+                An optional Arquillian testing profile that executes tests in a remote JBoss AS instance
+                Run with: mvn clean test -Parq-jbossas-remote
+             -->
+            <id>arq-jbossas-remote</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-remote</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+</project>
