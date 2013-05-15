@@ -130,6 +130,7 @@ public class ClusteringController {
                 }
             }
         }
+
         return "/main.xhtml";
     }
 

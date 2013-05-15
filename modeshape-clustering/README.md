@@ -4,7 +4,10 @@ Example Clustering 2 ModeShape Repositories
 What is it?
 -----------
 
-This is a self-contained and deployable Maven 3 project that shows how to cluster 2 ModeShape repositories.
+This is a self-contained and deployable Maven 3 project that shows how to cluster 2 ModeShape repositories. This example
+contains 2 configuration files for a simple master/slave setup. However, in production, it's likely that a _Highly Available_
+setup is desired. If that is the case, the only configuration difference from this quickstart is that HornetQ (or the chosen JMS solution)
+will need to be set up for high availability.
 
 System requirements
 -------------------
@@ -13,39 +16,41 @@ All you need to build this project is Java 6.0 (Java SDK 1.6) or better, Maven 3
 The application this project produces is designed to be run on JBoss Enterprise Application Platform 6.
 
 Install ModeShape's EAP kit into an existing JBoss EAP 6 server
------------------------------------------------------
+---------------------------------------------------------------
+
 Before running this demo make sure that you have installed the ModeShape EAP kit into an existing JBoss EAP server.
 The simplest way to do this is to follow the instructions provided [here](https://docs.jboss.org/author/display/MODE/Installing+ModeShape+into+AS7)
 
-Start 2 JBoss EAP instances with the configurations provided by this quickstart
------------------------------------------------------------------------------------------
+Start 2 JBoss EAP instances with the provided configurations
+------------------------------------------------------------
 
-1. Copy the `standalone-modeshape-ha-node1.xml` and `standalone-modeshape-ha-node2.xml` configuration files from the root of the quickstart
+1. Copy the `standalone-modeshape-ha-master.xml` and `standalone-modeshape-ha-slave.xml` configuration files from the root of the quickstart
 into the `JBOSS_HOME/standalone/configuration` folder
 2. Open a command line and navigate to the root of the JBoss server directory.
-3. Start the first server:
+3. Start the `master` server:
 
-        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-ha-node1.xml
-        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-ha-node1.xml
-4. Start the second server:
+        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-ha-master.xml
+        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-ha-master.xml
+4. Start the `slave` server:
 
-        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-ha-node2.xml
-        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-ha-node2.xml
+        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-ha-slave.xml
+        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-ha-slave.xml
 
 
 Build and Deploy the Quickstart into each of the running servers
 ----------------------------------------------------------------
+
 _NOTE: The following build command assumes you have configured your Maven user settings. If you have not, you must use the `settings.xml`
 file from the root of this project. See [this ModeShape community article](http://community.jboss.org/wiki/ModeShapeandMaven)
 for help on how to install and configure Maven 3._
 
 1. Make sure you have started the 2 JBoss Server instances as described above.
 2. Open a command line and navigate to the root directory of this quickstart.
-3. Type this command to build and deploy the archive into the first server:
+3. Type this command to build and deploy the archive into the `master` server:
 
         mvn clean package jboss-as:deploy
 
-4. Type this command to build and deploy the archive into the second server:
+4. Type this command to build and deploy the archive into the `slave` server:
 
         mvn clean package jboss-as:deploy -Djboss-as.port=10000
 
@@ -56,8 +61,8 @@ Accessing the application
 
 The application will be running at the following URLs:
 
-        On the first server: <http://localhost:8080/modeshape-clustering/>
-        On the second server: <http://localhost:8081/modeshape-clustering/>
+        On the `master` server: <http://localhost:8080/modeshape-clustering/>
+        On the `slave` server: <http://localhost:8081/modeshape-clustering/>
 
 Open the above URLs in two different browsers (or 2 different browser tabs/windows).
 
@@ -65,7 +70,7 @@ The user is presented with a form where he can input one of the following:
 
 1. Parent Absolute Path - an absolute node path
 2. New Node Name - a simple string which represents the name of new node that can be added
-3. Search for Nodes Like - a simple string which represents the name pattern of nodes that will be searched
+3. Search for Nodes Names Like - a simple string which represents the name pattern of nodes that will be searched
 
 based on which one of the following actions can be performed
 
@@ -78,11 +83,11 @@ Undeploy the Archive
 
 1. Make sure you have started the 2 JBoss Server instances as described above.
 2. Open a command line and navigate to the root directory of this quickstart.
-3. When you are finished testing, type this command to undeploy the archive from the first server:
+3. When you are finished testing, type this command to undeploy the archive from the `master` server:
 
         mvn jboss-as:undeploy
 
-4. When you are finished testing, type this command to undeploy the archive from the second server:
+4. When you are finished testing, type this command to undeploy the archive from the `slave` server:
 
         mvn jboss-as:undeploy -Djboss-as.port=10000
 
@@ -91,7 +96,7 @@ Run the Arquillian Tests
 
 This quickstart provides Arquillian tests. By default, these tests are configured to be skipped as Arquillian tests require the use of a container.
 
-1. Make sure you have started the JBoss Server corresponding to `node1` as described above.
+1. Make sure you have started the JBoss Server corresponding to `master` as described above.
 2. Open a command line and navigate to the root directory of this quickstart.
 3. Type the following command to run the test goal with the following profile activated:
 
