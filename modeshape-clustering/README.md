@@ -4,10 +4,18 @@ Example Clustering 2 ModeShape Repositories
 What is it?
 -----------
 
-This is a self-contained and deployable Maven 3 project that shows how to cluster 2 ModeShape repositories. This example
-contains 2 configuration files for a simple master/slave setup. However, in production, it's likely that a _Highly Available_
-setup is desired. If that is the case, the only configuration difference from this quickstart is that HornetQ (or the chosen JMS solution)
-will need to be set up for high availability.
+This is a self-contained and deployable Maven 3 project that shows how to cluster 2 ModeShape repositories.
+This example contains 2 sets of configuration files for a simple master/slave setup:
+
+ - the first set consists of  the `standalone-modeshape-master.xml` and `standalone-modeshape-slave.xml` files. They show how a
+ ModeShape repository can be clustered in replicated mode, with indexes being stored locally on the file system of each cluster
+ node, in separate folders.
+ - the second set consists of the `standalone-modeshape-master-jms.xml` and `standalone-modeshape-slave-jms.xml` files. They show
+ how a ModeShape repository can be clustered in replicated mode, with indexes being distributed and updated via JMS. In this setup,
+ the slave node sends index updates to a JMS queue which is processed by the master node.
+
+In a production environment where a __Highly Available & Resilient__ setup is desired, it is recommended that the configuration used
+is the distributed JMS configuration, with the __JMS provider configured for High Availability__.
 
 System requirements
 -------------------
@@ -21,20 +29,20 @@ Install ModeShape's EAP kit into an existing JBoss EAP 6 server
 Before running this demo make sure that you have installed the ModeShape EAP kit into an existing JBoss EAP server.
 The simplest way to do this is to follow the instructions provided [here](https://docs.jboss.org/author/display/MODE/Installing+ModeShape+into+AS7)
 
-Start 2 JBoss EAP instances with the provided configurations
-------------------------------------------------------------
+Start 2 JBoss EAP instances with either set of provided configurations (see above)
+--------------------------------------------------------------------------------------
 
-1. Copy the `standalone-modeshape-ha-master.xml` and `standalone-modeshape-ha-slave.xml` configuration files from the root of the quickstart
+1. Copy the `standalone-modeshape-master.xml` and `standalone-modeshape-slave.xml` configuration files from the root of the quickstart
 into the `JBOSS_HOME/standalone/configuration` folder
 2. Open a command line and navigate to the root of the JBoss server directory.
 3. Start the `master` server:
 
-        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-ha-master.xml
-        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-ha-master.xml
+        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-master.xml
+        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-master.xml
 4. Start the `slave` server:
 
-        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-ha-slave.xml
-        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-ha-slave.xml
+        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-slave.xml
+        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-slave.xml
 
 
 Build and Deploy the Quickstart into each of the running servers
