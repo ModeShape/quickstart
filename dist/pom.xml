@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-quickstarts-dist</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>3.3.0.Final</version>
     <name>ModeShape EAP Quickstarts Distribution</name>
     <description>POM for building the quickstarts distribution.</description>
     <url>http://www.modeshape.org</url>
