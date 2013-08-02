@@ -1,4 +1,4 @@
-package org.modeshape.quickstart.cdi;
+package org.modeshape.quickstart.clustering;
 
 import java.util.Collections;
 import java.util.Set;
