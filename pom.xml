@@ -20,6 +20,7 @@
 		<module>modeshape-cdi</module>
 		<module>modeshape-cli</module>
 		<module>modeshape-clustering</module>
+		<module>modeshape-federation</module>
     </modules>
 
     <profiles>

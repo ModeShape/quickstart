@@ -1,4 +1,4 @@
-package org.modeshape.quickstart.cdi;
+package org.modeshape.quickstart.clustering;
 
 import java.io.File;
 import javax.inject.Inject;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Arquillian test for {@link ClusteringController}
+ * Arquillian test for {@link org.modeshape.quickstart.clustering.ClusteringController}
  *
  * @author Horia Chiorean (hchiorea@redhat.com)
  */
