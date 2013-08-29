@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-ejb</artifactId>
-    <version>3.4-SNAPSHOT</version>
+    <version>3.5.0.Final</version>
     <packaging>war</packaging>
     <name>Example of web application that uses ModeShape via EJBs</name>
     <description>
