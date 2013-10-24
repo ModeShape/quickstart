@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-servlet</artifactId>
-    <version>3.5.0.Final</version>
+    <version>3.6.0.Final</version>
     <packaging>war</packaging>
     <name>Example of web application that uses ModeShape</name>
     <description>
@@ -30,7 +30,7 @@
 
         <!-- Global dependency version information-->
         <version.org.jboss.bom>1.0.4.Final</version.org.jboss.bom>
-        <version.modeshape>3.5.0.Final</version.modeshape>
+        <version.modeshape>3.6.0.Final</version.modeshape>
         <version.google.http-client>1.14.1-beta</version.google.http-client>
     </properties>
 
