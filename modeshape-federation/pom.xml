@@ -29,27 +29,11 @@
         <version.org.jboss.as.plugins.maven.plugin>7.4.Final</version.org.jboss.as.plugins.maven.plugin>
 
         <!-- Global dependency version information-->
-        <version.org.jboss.bom>1.0.4.Final</version.org.jboss.bom>
-        <version.modeshape>3.6.0.Final</version.modeshape>
+        <version.modeshape>3.7-SNAPSHOT</version.modeshape>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- JBoss distributes a complete set of Java EE 6 APIs including
-                a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
-                a collection) of artifacts. We use this here so that we always get the correct
-                versions of artifacts. Here we use the jboss-javaee-6.0 stack (you can
-                read this as the JBoss stack of the Java EE 6 APIs). You can actually
-                use this stack with any version of JBoss AS that implements Java EE 6, not
-                just JBoss AS 7! -->
-            <dependency>
-                <groupId>org.jboss.bom</groupId>
-                <artifactId>jboss-javaee-6.0-with-tools</artifactId>
-                <version>${version.org.jboss.bom}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <!-- Import the ModeShape BOM for embedded usage. This adds to the "dependenciesManagement" section
                  defaults for all of the modules we might need, but we still have to include in the
                  "dependencies" section the modules we DO need. The benefit is that we don't have to
@@ -76,8 +60,8 @@
         </dependency>
 
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
         </dependency>
 
         <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->

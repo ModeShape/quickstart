@@ -7,7 +7,7 @@ import javax.enterprise.inject.Produces;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import org.apache.log4j.Logger;
+import org.jboss.logging.Logger;
 
 /**
  * A simple managed bean, that provides clients with {@link javax.jcr.Session} instances.

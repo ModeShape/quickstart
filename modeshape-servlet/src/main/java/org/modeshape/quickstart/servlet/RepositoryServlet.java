@@ -36,7 +36,7 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Logger;
+import org.jboss.logging.Logger;
 
 /**
  * Demo for using JCR from web application. This example application accepts a "repository" parameter and a "path" parameter,
