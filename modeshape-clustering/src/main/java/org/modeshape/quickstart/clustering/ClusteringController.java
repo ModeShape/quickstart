@@ -16,7 +16,7 @@ import javax.jcr.Session;
 import javax.jcr.query.Query;
 import javax.jcr.query.QueryManager;
 import javax.jcr.query.QueryResult;
-import org.apache.log4j.Logger;
+import org.jboss.logging.Logger;
 
 /**
  * A simple JSF controller, that uses a repository which is injected directly,

@@ -30,7 +30,7 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import org.apache.log4j.Logger;
+import org.jboss.logging.Logger;
 import org.modeshape.jcr.api.JcrTools;
 
 /**

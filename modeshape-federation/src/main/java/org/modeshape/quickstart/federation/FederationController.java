@@ -14,7 +14,7 @@ import javax.jcr.NodeIterator;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import org.apache.log4j.Logger;
+import org.jboss.logging.Logger;
 
 /**
  * A simple JSF controller, that uses a repository which is injected directly.
