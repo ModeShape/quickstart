@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-cdi</artifactId>
-    <version>3.6.0.Final</version>
+    <version>3.7.1.Final</version>
     <packaging>war</packaging>
     <name>Example of a JSF web application that uses ModeShape via CDI</name>
     <description>
@@ -29,7 +29,7 @@
         <version.org.jboss.as.plugins.maven.plugin>7.4.Final</version.org.jboss.as.plugins.maven.plugin>
 
         <!-- Global dependency version information-->
-        <version.modeshape>3.7-SNAPSHOT</version.modeshape>
+        <version.modeshape>3.7.1.Final</version.modeshape>
     </properties>
 
     <dependencyManagement>
