@@ -4,14 +4,14 @@ ModeShape Quickstarts
 What is it?
 -----------
 
-ModeShape quickstarts are a collection of self-contained projects, that demonstrate how to use ModeShape when installed as part of JBoss EAP.
+ModeShape quickstarts are a collection of self-contained projects, that demonstrate how to use ModeShape when installed as part of JBoss AS.
 Each quickstart is a small, specific, focused, working example that can be used as a reference for your own project.
 
 System requirements
 -------------------
 
-All you need to build the quickstarts is Java 6.0 (Java SDK 1.6) or better, Maven 3.0 or better. Each quickstart
-produces a web application (WAR) that is designed to be run on JBoss Enterprise Application Platform 6.
+All you need to build the quickstarts is Java 7.0 (Java SDK 1.7) or better, Maven 3.0 or better. Each quickstart
+produces a web application (WAR) that is designed to be run on JBoss Wildfly 8.
 
 Contents
 --------
@@ -19,7 +19,7 @@ Contents
 The following quickstarts are available:
 
 * [modeshape-cdi](modeshape-cdi) - shows how you use CDI to inject various ModeShape JCR object instances
-* [modeshape-cli](modeshape-cli) - shows how you use the JBoss EAP CLI to configure a ModeShape subsystem
+* [modeshape-cli](modeshape-cli) - shows how you use the JBoss AS CLI to configure a ModeShape subsystem
 * [modeshape-clustering](modeshape-clustering) - shows how you can configure multiple ModeShape nodes to run in a cluster
 * [modeshape-ejb](modeshape-ejb) - shows how you can use ModeShape from different types of EJBs
 * [modeshape-servlet](modeshape-servlet) - shows how you can use ModeShape from a standard web application Servlet

@@ -24,7 +24,6 @@ public class RepositoryServletTest {
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "modeshape-servlet-test.war").addClass(RepositoryServlet.class)
-                .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"))
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-deployment-structure.xml"))
                 .addAsWebInfResource(new File("src/test/resources/log4j.properties"))
                 .addAsWebResource(new File("src/main/webapp/dblue106.gif"))
@@ -39,7 +38,7 @@ public class RepositoryServletTest {
         HttpRequestFactory requestFactory = new NetHttpTransport().createRequestFactory();
         Assert.assertEquals(200,
                             requestFactory.buildGetRequest(new GenericUrl(
-                                    "http://localhost:8080/modeshape-servlet/session.do?repository=sample&path=/"))
+                                    "http://localhost:8080/modeshape-servlet-test/session.do?repository=sample&path=/"))
                                     .execute().getStatusCode());
     }
 }

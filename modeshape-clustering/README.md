@@ -20,16 +20,16 @@ is the distributed JMS configuration, with the __JMS provider configured for Hig
 System requirements
 -------------------
 
-All you need to build this project is Java 6.0 (Java SDK 1.6) or better, Maven 3.0 or better.
-The application this project produces is designed to be run on JBoss Enterprise Application Platform 6.
+All you need to build this project is Java 7.0 (Java SDK 1.7) or better, Maven 3.0 or better.
+The application this project produces is designed to be run on JBoss Wildfly.
 
-Install ModeShape's EAP kit into an existing JBoss EAP 6 server
+Install ModeShape's Wildfly kit into an existing JBoss Wildfly server
 ---------------------------------------------------------------
 
-Before running this demo make sure that you have installed the ModeShape EAP kit into an existing JBoss EAP server.
+Before running this demo make sure that you have installed the ModeShape Wildfly kit into an existing JBoss Wildfly server.
 The simplest way to do this is to follow the instructions provided [here](https://docs.jboss.org/author/display/MODE/Installing+ModeShape+into+AS7)
 
-Start 2 JBoss EAP instances with either set of provided configurations (see above)
+Start 2 JBoss Wildfly instances with either set of provided configurations (see above)
 --------------------------------------------------------------------------------------
 
 1. Copy the `standalone-modeshape-master.xml` and `standalone-modeshape-slave.xml` configuration files from the root of the quickstart
