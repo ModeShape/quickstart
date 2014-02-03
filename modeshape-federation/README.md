@@ -11,16 +11,16 @@ Federated repository.
 System requirements
 -------------------
 
-All you need to build this project is Java 6.0 (Java SDK 1.6) or better, Maven 3.0 or better.
-The application this project produces is designed to be run on JBoss Enterprise Application Platform 6.
+All you need to build this project is Java 7.0 (Java SDK 1.7) or better, Maven 3.0 or better.
+The application this project produces is designed to be run on JBoss Wildfly 8.
 
-Install ModeShape's EAP kit into an existing JBoss EAP 6 server
+Install ModeShape's Wildfly kit into an existing JBoss Wildfly server
 ---------------------------------------------------------------
 
-Before running this demo make sure that you have installed the ModeShape EAP kit into an existing JBoss EAP server.
+Before running this demo make sure that you have installed the ModeShape Wildfly kit into an existing JBoss Wildfly server.
 The simplest way to do this is to follow the instructions provided [here](https://docs.jboss.org/author/display/MODE/Installing+ModeShape+into+AS7)
 
-Start a JBoss EAP instance with the provided configuration file (see above)
+Start a JBoss Wildfly instance with the provided configuration file (see above)
 ---------------------------------------------------------------------------
 
 1. Copy the `standalone-modeshape-federation.xml` file from the root of the quickstart into the `JBOSS_HOME/standalone/configuration`

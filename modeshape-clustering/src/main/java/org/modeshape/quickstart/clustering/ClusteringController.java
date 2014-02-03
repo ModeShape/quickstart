@@ -36,7 +36,7 @@ public class ClusteringController {
     private String newNodeName;
     private String nodeNamePattern;
 
-    private Set<String> nodes = Collections.emptySet();
+    private Set<String> nodes = new TreeSet<String>();
 
     /**
      * Sets a name for a new node to create.

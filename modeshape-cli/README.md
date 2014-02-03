@@ -11,15 +11,15 @@ a JSF application, after the ModeShape subsystem and the repository have be set 
 System requirements
 -------------------
 
-All you need to build this project is Java 6.0 (Java SDK 1.6) or better, Maven 3.0 or better.
-The application this project produces is designed to be run on JBoss Enterprise Application Platform 6.
+All you need to build this project is Java 7.0 (Java SDK 1.7) or better, Maven 3.0 or better.
+The application this project produces is designed to be run on JBoss Wildfly 8.
 
-Install ModeShape's EAP kit into an existing JBoss EAP 6 server
+Install ModeShape's AS kit into an existing JBoss Wildfly server
 -----------------------------------------------------
-Before running this demo make sure that you have installed the ModeShape EAP kit into an existing JBoss EAP server.
+Before running this demo make sure that you have installed the ModeShape AS kit into an existing JBoss Wildfly server.
 The simplest way to do this is to follow the instructions provided [here](https://docs.jboss.org/author/display/MODE/Installing+ModeShape+into+AS7)
 
-Start JBoss EAP with the default configuration
+Start Wildfly with the default configuration
 --------------------------------------------------------------------------------
 
 1. Open a command line and navigate to the root of the JBoss server directory.
@@ -34,8 +34,8 @@ Run the CLI script that creates the demo repository
 1. Open a command line and navigate to the root of the JBoss server directory.
 2. The following shows the command line which runs the script that creates the repository:
 
-        For Linux:   JBOSS_HOME/bin/jboss-cli.sh -c --file QUICKSTART_ROOT/src/main/resources/create-repository.cli
-        For Windows: JBOSS_HOME\bin\jboss-cli.bat -c --file QUICKSTART_ROOT\src\main\resources\create-repository.cli
+        For Linux:   JBOSS_HOME/bin/jboss-cli.sh -c --file=QUICKSTART_ROOT/src/main/resources/create-repository.cli
+        For Windows: JBOSS_HOME\bin\jboss-cli.bat -c --file=QUICKSTART_ROOT\src\main\resources\create-repository.cli
 
 Build and Deploy the Quickstart
 -------------------------

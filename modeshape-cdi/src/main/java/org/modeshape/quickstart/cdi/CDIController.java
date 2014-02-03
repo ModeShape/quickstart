@@ -1,6 +1,6 @@
 package org.modeshape.quickstart.cdi;
 
-import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.enterprise.context.RequestScoped;
@@ -28,7 +28,7 @@ public class CDIController {
     private String parentPath = "/";
     private String newNodeName;
 
-    private Set<String> children = Collections.emptySet();
+    private Set<String> children = new TreeSet<>();
 
     /**
      * Sets a name for a new node to create.
@@ -79,7 +79,7 @@ public class CDIController {
      * Loads the children nodes of the node located at {@link CDIController#parentPath}
      */
     public void loadChildren() {
-        children = new TreeSet<String>();
+        children = new TreeSet<>();
         if (parentPath == null || parentPath.trim().length() == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                     "The absolute path of the parent node is required"));

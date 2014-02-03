@@ -4,17 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-servlet</artifactId>
-    <version>3.7.1.Final</version>
+    <version>4.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Example of web application that uses ModeShape</name>
     <description>
-        A simple self-contained example web application that uses a servlet to retrieve a repository managed within EAP.
+        A simple self-contained example web application that uses a servlet to retrieve a repository managed within AS.
     </description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
 
         <!-- Maven plugin versions -->
         <version.assembly.plugin>2.4</version.assembly.plugin>
@@ -29,7 +29,7 @@
         <version.org.jboss.as.plugins.maven.plugin>7.4.Final</version.org.jboss.as.plugins.maven.plugin>
 
         <!-- Global dependency version information-->
-        <version.modeshape>3.7.1.Final</version.modeshape>
+        <version.modeshape>4.0-SNAPSHOT</version.modeshape>
         <version.google.http-client>1.14.1-beta</version.google.http-client>
     </properties>
 
@@ -41,7 +41,7 @@
                  specify the versions of any of those modules.-->
             <dependency>
                 <groupId>org.modeshape.bom</groupId>
-                <artifactId>modeshape-bom-jbosseap</artifactId>
+                <artifactId>modeshape-bom-jbossas</artifactId>
                 <version>${version.modeshape}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -212,9 +212,8 @@
             <id>arq-jbossas-remote</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.jboss.as</groupId>
-                    <artifactId>jboss-as-arquillian-container-remote</artifactId>
-                    <scope>test</scope>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-container-remote</artifactId>
                 </dependency>
             </dependencies>
         </profile>
