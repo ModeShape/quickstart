@@ -296,7 +296,7 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:modeshape:1.0">
             <!--The list of web applications that is packaged inside the kit and should be deployed when the subsystem starts up-->
-            <repository name="clustered-repo" cache-name="clustered-repo" cache-container="modeshape-repository-cache-container" cluster-name="modeshape-repository" cluster-stack="tcp">
+            <repository name="clustered-repo" cache-name="clustered-repo" cache-container="modeshape-repository-cache-container">
                 <indexing rebuild-upon-startup-mode="sync" rebuild-upon-startup-include-system-content="true"/>
                 <master-file-index-storage source-path="modeshape/clustered-repo/master-indexes"
                                            path="modeshape/clustered-repo/indexes/${jboss.node.name}"
