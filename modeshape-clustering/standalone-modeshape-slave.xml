@@ -249,7 +249,7 @@
             </cache-container>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:modeshape:1.0">
-            <repository name="clustered-repo" cache-name="clustered-repo" cache-container="modeshape-repository-cache-container" cluster-name="modeshape-repository" cluster-stack="tcp">
+            <repository name="clustered-repo" cache-name="clustered-repo" cache-container="modeshape-repository-cache-container">
                 <indexing rebuild-upon-startup-mode="sync" rebuild-upon-startup-include-system-content="true"/>
                 <local-file-index-storage path="modeshape/clustered-repo/${jboss.node.name}_indexes"/>
                 <cache-binary-storage data-cache-name="binary-fs" metadata-cache-name="binary-fs-meta" cache-container="modeshape-binary-cache-container"/>
