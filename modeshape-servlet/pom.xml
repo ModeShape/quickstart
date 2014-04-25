@@ -29,7 +29,7 @@
         <version.org.jboss.as.plugins.maven.plugin>7.4.Final</version.org.jboss.as.plugins.maven.plugin>
 
         <!-- Global dependency version information-->
-        <version.modeshape>4.0.0.Alpha1</version.modeshape>
+        <version.modeshape>4.0.0.Alpha2</version.modeshape>
         <version.google.http-client>1.14.1-beta</version.google.http-client>
     </properties>
 
