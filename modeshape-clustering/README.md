@@ -5,17 +5,11 @@ What is it?
 -----------
 
 This is a self-contained and deployable Maven 3 project that shows how to cluster 2 ModeShape repositories.
-This example contains 2 sets of configuration files for a simple master/slave setup:
+This example contains a set of configuration files for a simple two node deployment:
 
- - the first set consists of  the `standalone-modeshape-master.xml` and `standalone-modeshape-slave.xml` files. They show how a
+ - the set consists of  the `standalone-modeshape-node1.xml` and `standalone-modeshape-node2.xml` files. They show how a
  ModeShape repository can be clustered in replicated mode, with indexes being stored locally on the file system of each cluster
  node, in separate folders.
- - the second set consists of the `standalone-modeshape-master-jms.xml` and `standalone-modeshape-slave-jms.xml` files. They show
- how a ModeShape repository can be clustered in replicated mode, with indexes being distributed and updated via JMS. In this setup,
- the slave node sends index updates to a JMS queue which is processed by the master node.
-
-In a production environment where a __Highly Available & Resilient__ setup is desired, it is recommended that the configuration used
-is the distributed JMS configuration, with the __JMS provider configured for High Availability__.
 
 System requirements
 -------------------
@@ -29,20 +23,20 @@ Install ModeShape's Wildfly kit into an existing JBoss Wildfly server
 Before running this demo make sure that you have installed the ModeShape Wildfly kit into an existing JBoss Wildfly server.
 The simplest way to do this is to follow the instructions provided [here](https://docs.jboss.org/author/display/MODE/Installing+ModeShape+into+AS7)
 
-Start 2 JBoss Wildfly instances with either set of provided configurations (see above)
+Start 2 JBoss Wildfly instances with the set of provided configurations (see above)
 --------------------------------------------------------------------------------------
 
-1. Copy the `standalone-modeshape-master.xml` and `standalone-modeshape-slave.xml` configuration files from the root of the quickstart
+1. Copy the `standalone-modeshape-node1.xml` and `standalone-modeshape-node2.xml` configuration files from the root of the quickstart
 into the `JBOSS_HOME/standalone/configuration` folder
 2. Open a command line and navigate to the root of the JBoss server directory.
 3. Start the `master` server:
 
-        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-master.xml
-        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-master.xml
+        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-node1.xml
+        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-node1.xml
 4. Start the `slave` server:
 
-        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-slave.xml
-        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-slave.xml
+        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-node2.xml
+        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-nod2.xml
 
 
 Build and Deploy the Quickstart into each of the running servers
@@ -54,13 +48,13 @@ for help on how to install and configure Maven 3._
 
 1. Make sure you have started the 2 JBoss Server instances as described above.
 2. Open a command line and navigate to the root directory of this quickstart.
-3. Type this command to build and deploy the archive into the `master` server:
+3. Type this command to build and deploy the archive into the `node1` server:
 
-        mvn clean package jboss-as:deploy
+        mvn clean package wildfly:deploy
 
-4. Type this command to build and deploy the archive into the `slave` server:
+4. Type this command to build and deploy the archive into the `node2` server:
 
-        mvn clean package jboss-as:deploy -Djboss-as.port=10000
+        mvn clean package wildfly:deploy -Dwildfly.port=9991
 
 5. This will deploy `target/modeshape-clustering.war` to each of the running instances of the server.
 
@@ -69,8 +63,8 @@ Accessing the application
 
 The application will be running at the following URLs:
 
-        On the `master` server: <http://localhost:8080/modeshape-clustering/>
-        On the `slave` server: <http://localhost:8081/modeshape-clustering/>
+        On the `node1` server: <http://localhost:8080/modeshape-clustering/>
+        On the `node2` server: <http://localhost:8081/modeshape-clustering/>
 
 Open the above URLs in two different browsers (or 2 different browser tabs/windows).
 
@@ -91,24 +85,24 @@ Undeploy the Archive
 
 1. Make sure you have started the 2 JBoss Server instances as described above.
 2. Open a command line and navigate to the root directory of this quickstart.
-3. When you are finished testing, type this command to undeploy the archive from the `master` server:
+3. When you are finished testing, type this command to undeploy the archive from the `node1` server:
 
-        mvn jboss-as:undeploy
+        mvn wildfly:undeploy
 
-4. When you are finished testing, type this command to undeploy the archive from the `slave` server:
+4. When you are finished testing, type this command to undeploy the archive from the `node2` server:
 
-        mvn jboss-as:undeploy -Djboss-as.port=10000
+        mvn wildfly:undeploy -Dwildfly.port=9991
 
 Run the Arquillian Tests
 -------------------------
 
 This quickstart provides Arquillian tests. By default, these tests are configured to be skipped as Arquillian tests require the use of a container.
 
-1. Make sure you have started the JBoss Server corresponding to `master` as described above.
+1. Make sure you have started the JBoss Server corresponding to `node1` as described above.
 2. Open a command line and navigate to the root directory of this quickstart.
 3. Type the following command to run the test goal with the following profile activated:
 
-        mvn clean package -Parq-jbossas-remote
+        mvn clean package -Parq-wildfly-remote
 
 The ModeShape project
 ---------------------
