@@ -87,9 +87,6 @@
             </logger>
         </audit-log>
         <management-interfaces>
-            <native-interface security-realm="ManagementRealm">
-                <socket-binding native="management-native"/>
-            </native-interface>
             <http-interface security-realm="ManagementRealm" http-upgrade-enabled="true">
                 <socket-binding http="management-http"/>
             </http-interface>
@@ -197,27 +194,25 @@
         <subsystem xmlns="urn:jboss:domain:ee:2.0">
             <spec-descriptor-property-replacement>false</spec-descriptor-property-replacement>
             <jboss-descriptor-property-replacement>true</jboss-descriptor-property-replacement>
-            <ejb-annotation-property-replacement>false</ejb-annotation-property-replacement>
+            <annotation-property-replacement>false</annotation-property-replacement>
             <concurrent>
                 <context-services>
                     <context-service name="default" jndi-name="java:jboss/ee/concurrency/context/default" use-transaction-setup-provider="true"/>
                 </context-services>
+                <managed-thread-factories>
+                    <managed-thread-factory name="default" jndi-name="java:jboss/ee/concurrency/factory/default" context-service="default"/>
+                </managed-thread-factories>
                 <managed-executor-services>
                     <managed-executor-service name="default" jndi-name="java:jboss/ee/concurrency/executor/default" context-service="default" hung-task-threshold="60000" core-threads="5" max-threads="25" keepalive-time="5000"/>
                 </managed-executor-services>
                 <managed-scheduled-executor-services>
                     <managed-scheduled-executor-service name="default" jndi-name="java:jboss/ee/concurrency/scheduler/default" context-service="default" hung-task-threshold="60000" core-threads="2" keepalive-time="3000"/>
                 </managed-scheduled-executor-services>
-                <managed-thread-factories>
-                    <managed-thread-factory name="default" jndi-name="java:jboss/ee/concurrency/factory/default" context-service="default"/>
-                </managed-thread-factories>
             </concurrent>
+            <default-bindings context-service="java:jboss/ee/concurrency/context/default" datasource="java:jboss/datasources/ExampleDS" jms-connection-factory="java:jboss/DefaultJMSConnectionFactory" managed-executor-service="java:jboss/ee/concurrency/executor/default" managed-scheduled-executor-service="java:jboss/ee/concurrency/scheduler/default" managed-thread-factory="java:jboss/ee/concurrency/factory/default"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:ejb3:2.0">
             <session-bean>
-                <stateless>
-                    <bean-instance-pool-ref pool-name="slsb-strict-max-pool"/>
-                </stateless>
                 <stateful default-access-timeout="5000" cache-ref="simple" passivation-disabled-cache-ref="simple"/>
                 <singleton default-access-timeout="5000"/>
             </session-bean>
@@ -265,15 +260,12 @@
                 </local-cache>
             </cache-container>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:modeshape:1.0">
+        <subsystem xmlns="urn:jboss:domain:modeshape:2.0">
             <!--The list of web applications that is packaged inside the kit and should be deployed when the subsystem starts up-->
             <webapp name="modeshape-rest.war"/>
             <webapp name="modeshape-webdav.war"/>
 
             <repository name="federated-repository">
-                <!--Turn off initial indexing for performance reasons-->
-                <indexing rebuild-upon-startup="never" rebuild-upon-startup-include-system-content="false"
-                          rebuild-upon-startup-mode="sync"/>
                 <workspaces allow-workspace-creation="true" default-workspace="default">
                     <workspace name="default"/>
                 </workspaces>
@@ -423,7 +415,6 @@
         </interface>
     </interfaces>
     <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
-        <socket-binding name="management-native" interface="management" port="${jboss.management.native.port:9999}"/>
         <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
         <socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9993}"/>
         <socket-binding name="ajp" port="${jboss.ajp.port:8009}"/>
