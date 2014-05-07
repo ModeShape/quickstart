@@ -26,10 +26,10 @@
         <version.resources.plugin>2.6</version.resources.plugin>
         <version.surefire.plugin>2.12.3</version.surefire.plugin>
         <version.war.plugin>2.3</version.war.plugin>
-        <version.org.jboss.as.plugins.maven.plugin>7.4.Final</version.org.jboss.as.plugins.maven.plugin>
+        <version.wildfly.maven.plugin>1.0.1.Final</version.wildfly.maven.plugin>
 
         <!-- Global dependency version information-->
-        <version.modeshape>4.0.0.Alpha2</version.modeshape>
+        <version.modeshape>4.0-SNAPSHOT</version.modeshape>
     </properties>
 
     <dependencyManagement>
@@ -59,25 +59,24 @@
             <artifactId>modeshape-jcr-api</artifactId>
         </dependency>
 
-        <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
+        <!-- Import the CDI API, we use provided scope as the API is included by the server -->
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
-        <!-- Import the Common Annotations API (JSR-250), we use provided scope
-            as the API is included in JBoss AS 7 -->
+        <!-- Import the Common Annotations API (JSR-250), we use provided scope as the API is included by the server -->
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
-            <artifactId>jboss-annotations-api_1.1_spec</artifactId>
+            <artifactId>jboss-annotations-api_1.2_spec</artifactId>
             <scope>provided</scope>
         </dependency>
 
-        <!-- Import the JSF API, we use provided scope as the API is included in JBoss AS 7 -->
+        <!-- Import the JSF API, we use provided scope as the API is included by the server -->
         <dependency>
             <groupId>org.jboss.spec.javax.faces</groupId>
-            <artifactId>jboss-jsf-api_2.1_spec</artifactId>
+            <artifactId>jboss-jsf-api_2.2_spec</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -167,66 +166,14 @@
                     </configuration>
                 </plugin>
 
-                <!-- JBoss AS plugin to deploy war -->
+                <!-- WildFly plugin to deploy war -->
                 <plugin>
-                    <groupId>org.jboss.as.plugins</groupId>
-                    <artifactId>jboss-as-maven-plugin</artifactId>
-                    <version>${version.org.jboss.as.plugins.maven.plugin}</version>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>${version.wildfly.maven.plugin}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
-
-        <plugins>
-
-            <!--
-             //TODO author=Horia Chiorean date=4/29/13 description=Ideally, we would run those scripts automatically, but
-             something doesn't work with the current version of the plugin: https://community.jboss.org/message/810514#810514
-            <plugin>
-               <groupId>org.jboss.as.plugins</groupId>
-               <artifactId>jboss-as-maven-plugin</artifactId>
-               <executions>
-                    Undeploy the application on clean & Remove the test repository and ISPN caches
-                   <execution>
-                       <id>undeploy</id>
-                       <phase>clean</phase>
-                       <goals>
-                           <goal>undeploy</goal>
-                           <goal>execute-commands</goal>
-                           <goal>shutdown</goal>
-                       </goals>
-                       <configuration>
-                           <ignoreMissingDeployment>true</ignoreMissingDeployment>
-                           <reload>true</reload>
-                           <execute-commands>
-                               <batch>false</batch>
-                               <scripts>
-                                   <script>src/main/resources/remove-repository.cli</script>
-                               </scripts>
-                           </execute-commands>
-                       </configuration>
-                   </execution>
-
-                       Create the test repository and ISPN caches, and reload the repository
-                   <execution>
-                       <id>create-test-repository</id>
-                       <goals>
-                           <goal>execute-commands</goal>
-                           <goal>shutdown</goal>
-                       </goals>
-                       <phase>validate</phase>
-                       <configuration>
-                           <reload>true</reload>
-                           <execute-commands>
-                               <scripts>
-                                   <script>src/main/resources/create-repository.cli</script>
-                               </scripts>
-                           </execute-commands>
-                       </configuration>
-                   </execution>
-               </executions>
-           </plugin>
-           -->
-        </plugins>
     </build>
 
     <profiles>
@@ -248,6 +195,64 @@
                         <configuration>
                             <skip>true</skip>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>run-scripts-automatically</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
+                        <executions>
+                            <!--Undeploy the application on clean & Remove the test repository and ISPN caches-->
+                            <execution>
+                                <id>undeploy</id>
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>undeploy</goal>
+                                    <goal>execute-commands</goal>
+                                    <goal>shutdown</goal>
+                                </goals>
+                                <configuration>
+                                    <ignoreMissingDeployment>true</ignoreMissingDeployment>
+                                    <reload>true</reload>
+                                    <execute-commands>
+                                        <batch>false</batch>
+                                        <scripts>
+                                            <script>src/main/resources/remove-repository.cli</script>
+                                        </scripts>
+                                    </execute-commands>
+                                </configuration>
+                            </execution>
+
+                            <!--Create the test repository and ISPN caches, and reload the repository-->
+                            <execution>
+                                <id>create-test-repository</id>
+                                <goals>
+                                    <goal>execute-commands</goal>
+                                    <goal>shutdown</goal>
+                                </goals>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <reload>true</reload>
+                                    <execute-commands>
+                                        <scripts>
+                                            <script>src/main/resources/create-repository.cli</script>
+                                        </scripts>
+                                    </execute-commands>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
