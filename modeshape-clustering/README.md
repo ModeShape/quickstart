@@ -36,7 +36,7 @@ into the `JBOSS_HOME/standalone/configuration` folder
 4. Start the `slave` server:
 
         For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-node2.xml
-        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-nod2.xml
+        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-node2.xml
 
 
 Build and Deploy the Quickstart into each of the running servers
