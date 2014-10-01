@@ -243,7 +243,7 @@
             </cache-container>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:modeshape:2.0">
-            <repository name="clustered-repo" cache-name="clustered-repo" cache-container="modeshape-cluster">
+            <repository name="clustered-repo" cache-name="clustered-repo" cache-container="modeshape-cluster" anonymous-roles="admin">
                 <cache-binary-storage data-cache-name="binary-fs" metadata-cache-name="binary-fs-meta" cache-container="modeshape-binary-cache-container"/>
             </repository>
         </subsystem>
