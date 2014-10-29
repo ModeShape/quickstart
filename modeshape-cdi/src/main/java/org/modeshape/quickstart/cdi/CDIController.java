@@ -16,9 +16,8 @@
 
 package org.modeshape.quickstart.cdi;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import javax.annotation.Resource;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -28,18 +27,26 @@ import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A simple JSF controller, that uses CDI to obtain a {@link SessionProducer} instance with which it performs some operations.
  *
  * @author Horia Chiorean (hchiorea@redhat.com)
  */
-@Named( "cdiController" )
+@Named("cdiController")
 @RequestScoped
 public class CDIController {
 
     @Inject
     private Session repositorySession;
+
+    @Resource
+    private ManagedExecutorService managedExecutorService;
+
+    @Inject
+    private NodeManager nodeManager;
 
     private String parentPath = "/";
     private String newNodeName;
@@ -49,9 +56,10 @@ public class CDIController {
     /**
      * Sets a name for a new node to create.
      *
-     * @param newNodeName a {@code non-null} string
+     * @param newNodeName
+     *         a {@code non-null} string
      */
-    public void setNewNodeName( String newNodeName ) {
+    public void setNewNodeName(String newNodeName) {
         this.newNodeName = newNodeName;
     }
 
@@ -76,9 +84,10 @@ public class CDIController {
     /**
      * Sets the absolute path of a parent node.
      *
-     * @param parentPath a {@code non-null} string
+     * @param parentPath
+     *         a {@code non-null} string
      */
-    public void setParentPath( String parentPath ) {
+    public void setParentPath(String parentPath) {
         this.parentPath = parentPath;
     }
 
@@ -97,8 +106,7 @@ public class CDIController {
     public void loadChildren() {
         children = new TreeSet<>();
         if (parentPath == null || parentPath.trim().length() == 0) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-                    "The absolute path of the parent node is required"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The absolute path of the parent node is required"));
         } else {
             try {
                 Node parentNode = repositorySession.getNode(parentPath);
@@ -118,12 +126,8 @@ public class CDIController {
         if (newNodeName == null || newNodeName.trim().length() == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The name of the new node is required"));
         } else {
-            try {
-                Node parentNode = repositorySession.getNode(parentPath);
-                parentNode.addNode(newNodeName);
-                repositorySession.save();
-            } catch (RepositoryException e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            for (int i = 0; i < 10; i++) {
+                managedExecutorService.execute(new AddChildRunnable(parentPath, newNodeName, i));
             }
         }
         loadChildren();
@@ -136,5 +140,26 @@ public class CDIController {
      */
     public String getRepositoryName() {
         return repositorySession.getRepository().getDescriptor(org.modeshape.jcr.api.Repository.REPOSITORY_NAME);
+    }
+
+    /**
+     * Runnable implementation that uses an EJB to add a new node.
+     */
+    public class AddChildRunnable implements Runnable {
+
+        private final String parent;
+        private final String nodeName;
+        private final int index;
+
+        public AddChildRunnable(String parentPath, String nodeName, int index) {
+            this.parent = parentPath;
+            this.nodeName = nodeName;
+            this.index = index;
+        }
+
+        @Override
+        public void run() {
+            nodeManager.addNode(parent, nodeName, index);
+        }
     }
 }
