@@ -126,9 +126,9 @@ public class CDIController {
         if (newNodeName == null || newNodeName.trim().length() == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The name of the new node is required"));
         } else {
-            for (int i = 0; i < 10; i++) {
-                managedExecutorService.execute(new AddChildRunnable(parentPath, newNodeName, i));
-            }
+            //for (int i = 0; i < 10; i++) {
+                managedExecutorService.execute(new AddChildRunnable(parentPath, newNodeName, 0));
+            //}
         }
         loadChildren();
     }
