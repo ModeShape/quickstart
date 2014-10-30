@@ -45,9 +45,6 @@ public class CDIController {
     @Resource
     private ManagedExecutorService managedExecutorService;
 
-    @Inject
-    private NodeManager nodeManager;
-
     private String parentPath = "/";
     private String newNodeName;
 
@@ -127,7 +124,7 @@ public class CDIController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The name of the new node is required"));
         } else {
             for (int i = 0; i < 10; i++) {
-                managedExecutorService.execute(new AddChildRunnable(parentPath, newNodeName, i));
+                managedExecutorService.execute(new AddChildHandler(parentPath, newNodeName, i));
             }
         }
         loadChildren();
@@ -140,26 +137,5 @@ public class CDIController {
      */
     public String getRepositoryName() {
         return repositorySession.getRepository().getDescriptor(org.modeshape.jcr.api.Repository.REPOSITORY_NAME);
-    }
-
-    /**
-     * Runnable implementation that uses an EJB to add a new node.
-     */
-    public class AddChildRunnable implements Runnable {
-
-        private final String parent;
-        private final String nodeName;
-        private final int index;
-
-        public AddChildRunnable(String parentPath, String nodeName, int index) {
-            this.parent = parentPath;
-            this.nodeName = nodeName;
-            this.index = index;
-        }
-
-        @Override
-        public void run() {
-            nodeManager.addNode(parent, nodeName, index);
-        }
     }
 }
