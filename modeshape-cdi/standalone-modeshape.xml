@@ -84,7 +84,7 @@
     <profile>
         <subsystem xmlns="urn:jboss:domain:logging:2.0">
             <console-handler name="CONSOLE">
-                <level name="DEBUG"/>
+                <level name="TRACE"/>
                 <formatter>
                     <named-formatter name="COLOR-PATTERN"/>
                 </formatter>
@@ -115,8 +115,11 @@
             <logger category="jacorb.config">
                 <level name="ERROR"/>
             </logger>
-            <logger category="javax.transaction">
-                <level name="DEBUG"/>
+            <logger category="com.arjuna.ats">
+                <level name="TRACE"/>
+            </logger>
+            <logger category="org.modeshape.jcr.txn">
+                <level name="TRACE"/>
             </logger>
             <root-logger>
                 <level name="INFO"/>
@@ -459,7 +462,7 @@
 
     <deployments>
         <deployment name="modeshape-cdi.war" runtime-name="modeshape-cdi.war">
-            <content sha1="6ef5b368407dcdcfd41cd4949e7c562ab5a78903"/>
+            <content sha1="5109f4a0b64f09d5efaf346573325a4a5ac179fe"/>
         </deployment>
     </deployments>
 </server>
