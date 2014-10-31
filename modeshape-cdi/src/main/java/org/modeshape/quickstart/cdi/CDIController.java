@@ -16,9 +16,8 @@
 
 package org.modeshape.quickstart.cdi;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import javax.annotation.Resource;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -28,18 +27,27 @@ import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple JSF controller, that uses CDI to obtain a {@link SessionProducer} instance with which it performs some operations.
  *
  * @author Horia Chiorean (hchiorea@redhat.com)
  */
-@Named( "cdiController" )
+@Named("cdiController")
 @RequestScoped
 public class CDIController {
 
     @Inject
     private Session repositorySession;
+
+    @Resource
+    private ManagedExecutorService managedExecutorService;
 
     private String parentPath = "/";
     private String newNodeName;
@@ -49,9 +57,10 @@ public class CDIController {
     /**
      * Sets a name for a new node to create.
      *
-     * @param newNodeName a {@code non-null} string
+     * @param newNodeName
+     *         a {@code non-null} string
      */
-    public void setNewNodeName( String newNodeName ) {
+    public void setNewNodeName(String newNodeName) {
         this.newNodeName = newNodeName;
     }
 
@@ -76,9 +85,10 @@ public class CDIController {
     /**
      * Sets the absolute path of a parent node.
      *
-     * @param parentPath a {@code non-null} string
+     * @param parentPath
+     *         a {@code non-null} string
      */
-    public void setParentPath( String parentPath ) {
+    public void setParentPath(String parentPath) {
         this.parentPath = parentPath;
     }
 
@@ -97,8 +107,7 @@ public class CDIController {
     public void loadChildren() {
         children = new TreeSet<>();
         if (parentPath == null || parentPath.trim().length() == 0) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-                    "The absolute path of the parent node is required"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The absolute path of the parent node is required"));
         } else {
             try {
                 Node parentNode = repositorySession.getNode(parentPath);
@@ -118,12 +127,20 @@ public class CDIController {
         if (newNodeName == null || newNodeName.trim().length() == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The name of the new node is required"));
         } else {
-            try {
-                Node parentNode = repositorySession.getNode(parentPath);
-                parentNode.addNode(newNodeName);
-                repositorySession.save();
-            } catch (RepositoryException e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            int threadCount = 10;
+            List<Future<?>> futures = new ArrayList<>(threadCount);
+            for (int i = 0; i < threadCount; i++) {
+                futures.add(managedExecutorService.submit(new AddChildHandler(parentPath, newNodeName, i)));
+            }
+            for (Future<?> future : futures) {
+                try {
+                    future.get(10, TimeUnit.SECONDS);
+                } catch (Exception e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+                }
+            }
+            for (int i = 0; i < 10; i++) {
+                managedExecutorService.execute(new AddChildHandler(parentPath, newNodeName, i));
             }
         }
         loadChildren();
