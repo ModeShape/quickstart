@@ -27,8 +27,12 @@ import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple JSF controller, that uses CDI to obtain a {@link SessionProducer} instance with which it performs some operations.
@@ -123,6 +127,18 @@ public class CDIController {
         if (newNodeName == null || newNodeName.trim().length() == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("The name of the new node is required"));
         } else {
+            int threadCount = 10;
+            List<Future<?>> futures = new ArrayList<>(threadCount);
+            for (int i = 0; i < threadCount; i++) {
+                futures.add(managedExecutorService.submit(new AddChildHandler(parentPath, newNodeName, i)));
+            }
+            for (Future<?> future : futures) {
+                try {
+                    future.get(10, TimeUnit.SECONDS);
+                } catch (Exception e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+                }
+            }
             for (int i = 0; i < 10; i++) {
                 managedExecutorService.execute(new AddChildHandler(parentPath, newNodeName, i));
             }
