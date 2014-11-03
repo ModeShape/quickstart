@@ -14,6 +14,7 @@ if (outcome != success) of /subsystem=infinispan/cache-container=modeshape-test:
     /subsystem=infinispan/cache-container=modeshape-test:add
     /subsystem=infinispan/cache-container=modeshape-test/local-cache=test-cli:add
     /subsystem=infinispan/cache-container=modeshape-test/local-cache=test-cli/transaction=TRANSACTION:add(mode=NON_XA)
+    /subsystem=infinispan/cache-container=modeshape-test/local-cache=test-cli/locking=LOCKING:add(isolation=READ_COMMITTED)
     /subsystem=infinispan/cache-container=modeshape-test/local-cache=test-cli/file-store=FILE_STORE:add(path="modeshape/store/test-cli",passivation=false,purge=false)
 end-if
 
