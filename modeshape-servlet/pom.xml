@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-servlet</artifactId>
-    <version>4.1.0.Final</version>
+    <version>4.2.0.Final</version>
     <packaging>war</packaging>
     <name>Example of web application that uses ModeShape</name>
     <description>
@@ -29,7 +29,7 @@
         <version.wildfly.maven.plugin>1.0.1.Final</version.wildfly.maven.plugin>
 
         <!-- Global dependency version information-->
-        <version.modeshape>4.1.0.Final</version.modeshape>
+        <version.modeshape>4.2.0.Final</version.modeshape>
         <version.google.http-client>1.14.1-beta</version.google.http-client>
     </properties>
 
