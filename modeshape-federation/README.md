@@ -23,8 +23,7 @@ The simplest way to do this is to follow the instructions provided [here](https:
 Start a JBoss Wildfly instance with the provided configuration file (see above)
 ---------------------------------------------------------------------------
 
-1. Copy the `standalone-modeshape-federation.xml` file from the root of the quickstart into the `JBOSS_HOME/standalone/configuration`
-folder
+1. Copy the `standalone` folder from the root of the quickstart into the `JBOSS_HOME`folder
 2. Open a command line and navigate to the root of the JBoss server directory.
 3. Start the `master` server:
 
@@ -42,7 +41,7 @@ for help on how to install and configure Maven 3._
 2. Open a command line and navigate to the root directory of this quickstart.
 3. Type this command to build and deploy the archive into the `master` server:
 
-        mvn clean package jboss-as:deploy
+        mvn clean package wildfly:deploy
 
 4. This will deploy `target/modeshape-federation.war` to the running server.
 
@@ -65,7 +64,7 @@ Undeploy the Archive
 2. Open a command line and navigate to the root directory of this quickstart.
 3. When you are finished testing, type this command to undeploy the archive from the server:
 
-        mvn jboss-as:undeploy
+        mvn wildfly:undeploy
 
 Run the Arquillian Tests
 -------------------------
