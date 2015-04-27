@@ -26,8 +26,7 @@ The simplest way to do this is to follow the instructions provided [here](https:
 Start 2 JBoss Wildfly instances with the set of provided configurations (see above)
 --------------------------------------------------------------------------------------
 
-1. Copy the `standalone-modeshape-node1.xml` and `standalone-modeshape-node2.xml` configuration files from the root of the quickstart
-into the `JBOSS_HOME/standalone/configuration` folder
+1. Copy the `standalone` folder from the root of the quickstart into the `JBOSS_HOME`folder
 2. Open a command line and navigate to the root of the JBoss server directory.
 3. Start the `master` server:
 

@@ -38,7 +38,7 @@ for help on how to install and configure Maven 3._
 2. Open a command line and navigate to the root directory of this quickstart.
 3. Type this command to build and deploy the archive:
 
-        mvn clean package jboss-as:deploy
+        mvn clean package wildfly:deploy
 
 4. This will deploy `target/modeshape-cdi.war` to the running instance of the server.
 
@@ -66,7 +66,7 @@ Undeploy the Archive
 2. Open a command line and navigate to the root directory of this quickstart.
 3. When you are finished testing, type this command to undeploy the archive:
 
-        mvn jboss-as:undeploy
+        mvn wildfly:undeploy
 
 Run the Arquillian Tests
 -------------------------
