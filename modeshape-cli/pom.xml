@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-cli</artifactId>
-    <version>4.3.0.Final</version>
+    <version>4.4-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Example of a JSF web application that uses CLI scripts to create and remove a repository</name>
     <description>
@@ -26,10 +26,10 @@
         <version.resources.plugin>2.6</version.resources.plugin>
         <version.surefire.plugin>2.12.3</version.surefire.plugin>
         <version.war.plugin>2.3</version.war.plugin>
-        <version.wildfly.maven.plugin>1.0.1.Final</version.wildfly.maven.plugin>
+        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
 
         <!-- Global dependency version information-->
-        <version.modeshape>4.3.0.Final</version.modeshape>
+        <version.modeshape>4.4-SNAPSHOT</version.modeshape>
     </properties>
 
     <dependencyManagement>
@@ -200,6 +200,10 @@
             </build>
         </profile>
         <profile>
+            <!-- 
+                Not working properly because of https://issues.jboss.org/browse/WFCORE-533
+                i.e. you can't reload automatically and wait for the reloading to finish
+            -->
             <id>run-scripts-automatically</id>
             <build>
                 <plugins>
@@ -214,7 +218,7 @@
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-maven-plugin</artifactId>
                         <executions>
-                            <!--Undeploy the application on clean & Remove the test repository and ISPN caches-->
+                            <!--Undeploy the application on clean & Remove the test repository -->
                             <execution>
                                 <id>undeploy</id>
                                 <phase>clean</phase>
@@ -224,8 +228,8 @@
                                     <goal>shutdown</goal>
                                 </goals>
                                 <configuration>
-                                    <ignoreMissingDeployment>true</ignoreMissingDeployment>
                                     <reload>true</reload>
+                                    <ignoreMissingDeployment>true</ignoreMissingDeployment>
                                     <execute-commands>
                                         <batch>false</batch>
                                         <scripts>
@@ -235,16 +239,14 @@
                                 </configuration>
                             </execution>
 
-                            <!--Create the test repository and ISPN caches, and reload the repository-->
+                            <!--Create the test repository  and reload the repository-->
                             <execution>
                                 <id>create-test-repository</id>
                                 <goals>
                                     <goal>execute-commands</goal>
-                                    <goal>shutdown</goal>
                                 </goals>
-                                <phase>validate</phase>
+                                <phase>compile</phase>
                                 <configuration>
-                                    <reload>true</reload>
                                     <execute-commands>
                                         <scripts>
                                             <script>src/main/resources/create-repository.cli</script>
@@ -265,7 +267,7 @@
             <id>arq-jbossas-remote</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
                 </dependency>
             </dependencies>

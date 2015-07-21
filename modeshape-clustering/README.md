@@ -28,11 +28,11 @@ Start 2 JBoss Wildfly instances with the set of provided configurations (see abo
 
 1. Copy the `standalone` folder from the root of the quickstart into the `JBOSS_HOME`folder
 2. Open a command line and navigate to the root of the JBoss server directory.
-3. Start the `master` server:
+3. Start the first server:
 
         For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-node1.xml
         For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-node1.xml
-4. Start the `slave` server:
+4. Start the second server:
 
         For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-node2.xml
         For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-node2.xml
