@@ -16,7 +16,6 @@
 
 package org.modeshape.quickstart.cdi;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.enterprise.context.RequestScoped;

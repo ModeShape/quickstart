@@ -11,7 +11,7 @@ System requirements
 -------------------
 
 All you need to build the quickstarts is Java 7.0 (Java SDK 1.7) or better, Maven 3.0 or better. Each quickstart
-produces a web application (WAR) that is designed to be run on JBoss Wildfly 8.
+produces a web application (WAR) that is designed to be run on JBoss Wildfly 9.
 
 Contents
 --------

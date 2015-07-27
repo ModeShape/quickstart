@@ -12,7 +12,7 @@ System requirements
 -------------------
 
 All you need to build this project is Java 7.0 (Java SDK 1.7) or better, Maven 3.0 or better.
-The application this project produces is designed to be run on JBoss Wildfly 8.
+The application this project produces is designed to be run on JBoss Wildfly 9.
 
 Install ModeShape's AS kit into an existing JBoss Wildfly server
 -----------------------------------------------------
