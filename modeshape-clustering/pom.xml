@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-clustering</artifactId>
-    <version>4.4-SNAPSHOT</version>
+    <version>4.4.0.Final</version>
     <packaging>war</packaging>
     <name>Example of a JSF web application that uses several clustered ModeShape servers</name>
     <description>
@@ -29,7 +29,7 @@
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
 
         <!-- Global dependency version information-->
-        <version.modeshape>4.4-SNAPSHOT</version.modeshape>
+        <version.modeshape>4.4.0.Final</version.modeshape>
     </properties>
 
     <dependencyManagement>
