@@ -11,71 +11,46 @@ Federated repository.
 System requirements
 -------------------
 
-All you need to build this project is Java 7.0 (Java SDK 1.7) or better, Maven 3.0 or better.
-The application this project produces is designed to be run on JBoss Wildfly 9.
+All you need to build this project is Java 8.0 (Java SDK 1.8) or better, Maven 3.0 or better.
+The application this project produces is designed to be run on JBoss Wildfly 9 or 10.
 
-Install ModeShape's Wildfly kit into an existing JBoss Wildfly server
----------------------------------------------------------------
-
-Before running this demo make sure that you have installed the ModeShape Wildfly kit into an existing JBoss Wildfly server.
-The simplest way to do this is to follow the instructions provided [here](https://docs.jboss.org/author/display/MODE/Installing+ModeShape+into+AS7)
-
-Start a JBoss Wildfly instance with the provided configuration file (see above)
----------------------------------------------------------------------------
-
-1. Copy the `standalone` folder from the root of the quickstart into the `JBOSS_HOME`folder
-2. Open a command line and navigate to the root of the JBoss server directory.
-3. Start the `master` server:
-
-        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone-modeshape-federation.xml
-        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone-modeshape-federation.xml
-
-Build and Deploy the Quickstart
--------------------------------
-
+Running the Quickstart
+-------------------------
 _NOTE: The following build command assumes you have configured your Maven user settings. If you have not, you must use the `settings.xml`
 file from the root of this project. See [this ModeShape community article](http://community.jboss.org/wiki/ModeShapeandMaven)
 for help on how to install and configure Maven 3._
 
-1. Make sure you have started the JBoss Server instance as described above.
-2. Open a command line and navigate to the root directory of this quickstart.
-3. Type this command to build and deploy the archive into the `master` server:
+1. Open a command line and navigate to the root directory of this quickstart.
+2. Type this command to build and deploy the archive:
 
-        mvn clean package wildfly:deploy
+        mvn clean package
 
-4. This will deploy `target/modeshape-federation.war` to the running server.
+3. This will start a local Wildfly instance located at `target\wildfly', unpack and copy the ModeShape WF kit together with the `standalone-modeshape-federation.xml` configuration and 
+deploy `target/modeshape-federation.war` to the running instance of the server.
 
 Accessing the application
 ------------------------
 
-The application will be running at the following URL: <http://localhost:8080/modeshape-federation/>
+The application will be running at the following URL: http://localhost:8080/modeshape-federation
 
 Open the above URLs into your browser
 
 The user is presented with a form where he can choose an external source for which to list its content:
 
 1. JBoss Server Data Dir - represents the JBOSS_HOME/standalone/data folder
-2. Example DB - represents a simple, in memory H2 database which has been configured as part of  `standalone-modeshape-federation.xml`
-
-Undeploy the Archive
---------------------
-
-1. Make sure you have started the JBoss Server instance as described above.
-2. Open a command line and navigate to the root directory of this quickstart.
-3. When you are finished testing, type this command to undeploy the archive from the server:
-
-        mvn wildfly:undeploy
+2. Example DB - represents a simple, in memory H2 database which has been configured as part of `standalone-modeshape-federation.xml`
 
 Run the Arquillian Tests
 -------------------------
 
-This quickstart provides Arquillian tests. By default, these tests are configured to be skipped as Arquillian tests require the use of a container.
+This quickstart provides some optional Arquillian tests. These are part of separate profile and can be run like so: 
 
-1. Make sure you have started the JBoss Server as described above.
-2. Open a command line and navigate to the root directory of this quickstart.
-3. Type the following command to run the test goal with the following profile activated:
+1. Open a command line and navigate to the root directory of this quickstart.
+2. Type the following command to run the tests:
 
-        mvn clean package -Parq-jbossas-remote
+       mvn clean verify -Pdist
+
+The above command will start a server with the ModeShape WF kit deployed and run the tests using the `standalone-modeshape-federation.xml` configuration.
 
 The ModeShape project
 ---------------------

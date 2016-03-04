@@ -57,7 +57,7 @@ public class ClusteringControllerTest {
 
     @Test
     public void shouldReturnValidRepositoryName() throws Exception {
-        assertEquals("clustered-repo", clusteringController.getRepositoryName());
+        assertEquals("sample", clusteringController.getRepositoryName());
     }
 
     @Test

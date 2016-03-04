@@ -45,7 +45,7 @@ public class ClusteringController {
 
     private static final Logger LOGGER = Logger.getLogger(ClusteringController.class);
 
-    @Resource(mappedName = "java:/jcr/clustered-repo")
+    @Resource(mappedName = "java:/jcr/sample")
     private transient Repository clusteredRepository;
 
     private String parentPath = "/";

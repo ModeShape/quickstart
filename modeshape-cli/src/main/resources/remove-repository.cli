@@ -1,6 +1,0 @@
-# Remove the test repository if it exists
-if (outcome == success) of /subsystem=modeshape/repository=test-cli:read-resource
-    /subsystem=modeshape/repository=test-cli:remove
-    :reload
-end-if
-

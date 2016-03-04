@@ -11,45 +11,21 @@ a JSF application, after the ModeShape subsystem and the repository have be set 
 System requirements
 -------------------
 
-All you need to build this project is Java 7.0 (Java SDK 1.7) or better, Maven 3.0 or better.
-The application this project produces is designed to be run on JBoss Wildfly 9.
+All you need to build this project is Java 8.0 (Java SDK 1.8) or better, Maven 3.0 or better.
+The application this project produces is designed to be run on JBoss Wildfly.
 
-Install ModeShape's AS kit into an existing JBoss Wildfly server
------------------------------------------------------
-Before running this demo make sure that you have installed the ModeShape AS kit into an existing JBoss Wildfly server.
-The simplest way to do this is to follow the instructions provided [here](https://docs.jboss.org/author/display/MODE/Installing+ModeShape+into+AS7)
-
-Start Wildfly with the default configuration
---------------------------------------------------------------------------------
-
-1. Open a command line and navigate to the root of the JBoss server directory.
-2. The following shows the command line to start the server with the ModeShape profile:
-
-        For Linux:   JBOSS_HOME/bin/standalone.sh -c standalone.xml
-        For Windows: JBOSS_HOME\bin\standalone.bat -c standalone.xml
-
-Run the CLI script that creates the demo repository
---------------------------------------------------------------------------------
-
-1. Open a command line and navigate to the root of the JBoss server directory.
-2. The following shows the command line which runs the script that creates the repository:
-
-        For Linux:   JBOSS_HOME/bin/jboss-cli.sh -c --file=QUICKSTART_ROOT/src/main/resources/create-repository.cli
-        For Windows: JBOSS_HOME\bin\jboss-cli.bat -c --file=QUICKSTART_ROOT\src\main\resources\create-repository.cli
-
-Build and Deploy the Quickstart
+Running the Quickstart
 -------------------------
 _NOTE: The following build command assumes you have configured your Maven user settings. If you have not, you must use the `settings.xml`
 file from the root of this project. See [this ModeShape community article](http://community.jboss.org/wiki/ModeShapeandMaven)
 for help on how to install and configure Maven 3._
 
-1. Make sure you have started the JBoss Server and have ran the CLI script as described above.
-2. Open a command line and navigate to the root directory of this quickstart.
-3. Type this command to build and deploy the archive:
+1. Open a command line and navigate to the root directory of this quickstart.
+2. Type this command to build and deploy the archive:
 
-        mvn clean package wildfly:deploy
+        mvn clean package
 
-4. This will deploy `target/modeshape-cli.war` to the running instance of the server.
+4. This will start a local Wildfly instance located at `target\wildfly', unpack and copy the ModeShape WF kit and deploy `target/modeshape-cli.war` to the running instance of the server.
 
 Accessing the application
 ---------------------
@@ -57,32 +33,17 @@ Accessing the application
 The application will be running at the following URL: <http://localhost:8080/modeshape-cli/> and will display a simple,
 read-only form which displays information about the repository which was created via the CLI script.
 
-Undeploy the Archive
---------------------
-
-1. Make sure you have started the JBoss Server as described above.
-2. Open a command line and navigate to the root directory of this quickstart.
-3. When you are finished testing, type this command to undeploy the archive:
-
-        mvn wildfly:undeploy
-
-Remove the demo repository
----------------------------
-If you want to cleanup the repository and other ModeShape related data, you can run the following script:
-
-        For Linux:   JBOSS_HOME/bin/jboss-cli.sh -c --file QUICKSTART_ROOT/src/main/resources/remove-repository.cli
-        For Windows: JBOSS_HOME\bin\jboss-cli.bat -c --file QUICKSTART_ROOT\src\main\resources\remove-repository.cli
-
 Run the Arquillian Tests
 -------------------------
 
-This quickstart provides Arquillian tests. By default, these tests are configured to be skipped as Arquillian tests require the use of a container.
+This quickstart provides some optional Arquillian tests. These are part of separate profile and can be run like so: 
 
-1. Make sure you have started the JBoss Server and have ran the CLI script as described above.
-2. Open a command line and navigate to the root directory of this quickstart.
-3. Type the following command to run the test goal with the following profile activated:
+1. Open a command line and navigate to the root directory of this quickstart.
+2. Type the following command to run the tests:
 
-        mvn clean package -Parq-jbossas-remote
+       mvn clean verify -Pdist
+
+The above command will start a server with the ModeShape WF kit deployed and run the tests using a custom created repository.
 
 The ModeShape project
 ---------------------

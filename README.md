@@ -10,8 +10,8 @@ Each quickstart is a small, specific, focused, working example that can be used 
 System requirements
 -------------------
 
-All you need to build the quickstarts is Java 7.0 (Java SDK 1.7) or better, Maven 3.0 or better. Each quickstart
-produces a web application (WAR) that is designed to be run on JBoss Wildfly 9.
+All you need to build the quickstarts is Java 8.0 (Java SDK 1.8) or better, Maven 3.0 or better. Each quickstart
+produces a web application (WAR) that is designed to be run on JBoss Wildfly 9 or 10.
 
 Contents
 --------
@@ -32,9 +32,9 @@ for help on how to install and configure Maven 3._
 
 To create a zip distribution with all the quickstarts, run the following Maven command:
 
-        mvn clean install -Pdist
+        mvn clean verify -Pdist
 
-The output will be placed in the [dist/target](dist/target) folder.
+The output will be placed in the [target](target) folder.
 
 The ModeShape project
 ---------------------
