@@ -2,9 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>20</version>
+        <relativePath></relativePath>
+    </parent>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-cdi</artifactId>
-    <version>4.5.0.Final</version>
+    <version>5.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Example of a JSF web application that uses ModeShape via CDI</name>
     <description>
@@ -12,24 +18,11 @@
     </description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-
-        <!-- Maven plugin versions -->
-        <version.assembly.plugin>2.4</version.assembly.plugin>
-        <version.clean.plugin>2.5</version.clean.plugin>
-        <version.compiler.plugin>3.0</version.compiler.plugin>
-        <version.dependency.plugin>2.6</version.dependency.plugin>
-        <version.install.plugin>2.4</version.install.plugin>
-        <version.jar.plugin>2.4</version.jar.plugin>
-        <version.resources.plugin>2.6</version.resources.plugin>
-        <version.surefire.plugin>2.12.3</version.surefire.plugin>
-        <version.war.plugin>2.3</version.war.plugin>
+        <version.modeshape>5.0-SNAPSHOT</version.modeshape>
+        
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
-
-        <!-- Global dependency version information-->
-        <version.modeshape>4.5.0.Final</version.modeshape>
+        <version.org.wildfly>10.0.0.Final</version.org.wildfly>
+        <modeshape.wf.distribution.classifier>jboss-wf-dist</modeshape.wf.distribution.classifier>
     </properties>
 
     <dependencyManagement>
@@ -112,105 +105,146 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
-
         <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${version.assembly.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>${version.clean.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${version.compiler.plugin}</version>
-                    <configuration>
-                        <showDeprecation>false</showDeprecation>
-                        <showWarnings>false</showWarnings>
-                        <compilerArguments>
-                            <source>${maven.compiler.source}</source>
-                            <target>${maven.compiler.target}</target>
-                        </compilerArguments>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${version.dependency.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>${version.install.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>${version.jar.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>${version.resources.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${version.surefire.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>${version.war.plugin}</version>
-                    <configuration>
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
-                    </configuration>
-                </plugin>
-
-                <!-- WildFly plugin to deploy war -->
-                <plugin>
-                    <groupId>org.wildfly.plugins</groupId>
-                    <artifactId>wildfly-maven-plugin</artifactId>
-                    <version>${version.wildfly.maven.plugin}</version>
-                </plugin>
-            </plugins>
+          <plugins>
+              <plugin>
+                  <groupId>org.wildfly.plugins</groupId>
+                  <artifactId>wildfly-maven-plugin</artifactId>
+                  <version>${version.wildfly.maven.plugin}</version>
+                  <configuration>
+                      <jbossHome>${project.build.directory}/wildfly-${version.org.wildfly}</jbossHome>
+                      <serverConfig>standalone-modeshape.xml</serverConfig>
+                  </configuration>
+              </plugin>
+              <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-war-plugin</artifactId>
+                  <configuration>
+                      <failOnMissingWebXml>false</failOnMissingWebXml>
+                  </configuration>
+              </plugin>
+              <plugin>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                  <version>${version.surefire.plugin}</version>
+                  <configuration>
+                      <skip>true</skip>
+                  </configuration>
+              </plugin>
+          </plugins> 
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <!-- Unpack the JBoss Server version which should be installed locally first into the 'target' directory -->
+                                <artifactItem>
+                                    <groupId>org.wildfly</groupId>
+                                    <artifactId>wildfly-dist</artifactId>
+                                    <version>${version.org.wildfly}</version>
+                                    <type>zip</type>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </artifactItem>
+
+                                <!-- Unpack the ModeShape distribution -->
+                                <artifactItem>
+                                    <groupId>org.modeshape</groupId>
+                                    <artifactId>modeshape-distribution</artifactId>
+                                    <version>${version.modeshape}</version>
+                                    <classifier>${modeshape.wf.distribution.classifier}</classifier>
+                                    <type>zip</type>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${project.build.directory}/wildfly-${version.org.wildfly}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <profiles>
         <profile>
-            <!-- The default profile skips all tests, though you can tune
-                it to run just unit tests based on a custom pattern -->
-
-            <!-- Separate profiles are provided for running all tests, including
-                Arquillian tests that execute in the specified container -->
             <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <build>
                 <plugins>
+                    <!-- Run the WF server -->
                     <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${version.surefire.plugin}</version>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>run-server</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
         <profile>
             <!--
-                An optional Arquillian testing profile that executes tests in a remote JBoss AS instance
-                Run with: mvn clean test -Parq-jbossas-remote
+                An optional profile which starts a WF server and runs some tests   
              -->
-            <id>arq-jbossas-remote</id>
+            <id>dist</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- Start the WF server -->
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>run-server</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop-server</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>shutdown</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                                <configuration>
+                                    <includes>
+                                        <include>**/*Test</include>
+                                    </includes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
             <dependencies>
                 <dependency>
                     <groupId>org.wildfly.arquillian</groupId>
@@ -219,4 +253,10 @@
             </dependencies>
         </profile>
     </profiles>
+    <repositories>
+        <repository>
+            <id>JBoss-Releases</id>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+        </repository>
+    </repositories>
 </project>
