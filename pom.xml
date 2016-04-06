@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-quickstarts</artifactId>
-    <version>5.0-SNAPSHOT</version>
+    <version>5.0.0.Final</version>
     <name>ModeShape Wildfly Quickstarts</name>
     <description>Top-Level POM for building all of the quickstarts.</description>
     <url>http://www.modeshape.org</url>
