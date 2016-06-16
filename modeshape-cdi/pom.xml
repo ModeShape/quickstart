@@ -20,7 +20,7 @@
     <properties>
         <version.modeshape>5.1.0.Final</version.modeshape>
         
-        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+        <version.wildfly.maven.plugin>1.1.0.Alpha8</version.wildfly.maven.plugin>
         <version.org.wildfly>10.0.0.Final</version.org.wildfly>
         <modeshape.wf.distribution.classifier>jboss-wf-dist</modeshape.wf.distribution.classifier>
     </properties>
@@ -112,6 +112,7 @@
                   <artifactId>wildfly-maven-plugin</artifactId>
                   <version>${version.wildfly.maven.plugin}</version>
                   <configuration>
+                      <skip>${skipTests}</skip>
                       <jbossHome>${project.build.directory}/wildfly-${version.org.wildfly}</jbossHome>
                       <serverConfig>standalone-modeshape.xml</serverConfig>
                   </configuration>
@@ -144,6 +145,7 @@
                             <goal>unpack</goal>
                         </goals>
                         <configuration>
+                            <skip>${skipTests}</skip>
                             <artifactItems>
                                 <!-- Unpack the JBoss Server version which should be installed locally first into the 'target' directory -->
                                 <artifactItem>

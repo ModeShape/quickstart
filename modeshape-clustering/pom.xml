@@ -18,7 +18,7 @@
     </description>
 
     <properties>
-        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+        <version.wildfly.maven.plugin>1.1.0.Alpha8</version.wildfly.maven.plugin>
         <version.org.wildfly>10.0.0.Final</version.org.wildfly>
         <modeshape.wf.distribution.classifier>jboss-wf-dist</modeshape.wf.distribution.classifier>
 
@@ -130,6 +130,9 @@
                     <groupId>org.wildfly.plugins</groupId>
                     <artifactId>wildfly-maven-plugin</artifactId>
                     <version>${version.wildfly.maven.plugin}</version>
+                    <configuration>
+                        <skip>${skipTests}</skip>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -146,6 +149,7 @@
                             <goal>unpack</goal>
                         </goals>
                         <configuration>
+                            <skip>${skipTests}</skip>
                             <artifactItems>
                                 <!-- Unpack the JBoss Server version which should be installed locally first into the 'target' directory -->
                                 <artifactItem>
@@ -186,6 +190,9 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-resources-plugin</artifactId>
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                        </configuration>
                         <executions>
                             <!-- Copy the webapp produced by this quickstart to the WF server-->
                             <execution>
