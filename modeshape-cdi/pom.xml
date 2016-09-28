@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-cdi</artifactId>
-    <version>5.1.0.Final</version>
+    <version>5.2.0.Final</version>
     <packaging>war</packaging>
     <name>Example of a JSF web application that uses ModeShape via CDI</name>
     <description>
@@ -18,7 +18,7 @@
     </description>
 
     <properties>
-        <version.modeshape>5.1.0.Final</version.modeshape>
+        <version.modeshape>5.2.0.Final</version.modeshape>
         
         <version.wildfly.maven.plugin>1.1.0.Alpha8</version.wildfly.maven.plugin>
         <version.org.wildfly>10.0.0.Final</version.org.wildfly>
