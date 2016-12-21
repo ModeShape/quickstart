@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.modeshape.quickstarts</groupId>
     <artifactId>modeshape-ejb</artifactId>
-    <version>5.2.0.Final</version>
+    <version>5.3.0.Final</version>
     <packaging>war</packaging>
     <name>Example of web application that uses ModeShape via EJBs</name>
     <description>
@@ -23,7 +23,7 @@
         <modeshape.wf.distribution.classifier>jboss-wf-dist</modeshape.wf.distribution.classifier>
 
         <!-- Global dependency version information-->
-        <version.modeshape>5.2.0.Final</version.modeshape>
+        <version.modeshape>5.3.0.Final</version.modeshape>
     </properties>
 
     <dependencyManagement>
